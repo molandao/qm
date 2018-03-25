@@ -21,8 +21,8 @@ class UserSearch(models.Model):# 文章查询
 
 class ArticleComments(models.Model):
     # 文章评论
-    user = models.ForeignKey(UserProfile,verbose_name=u"用户笔名")
-    article = models.ForeignKey(Article, verbose_name=u"文章")
+    user = models.ForeignKey(UserProfile,verbose_name=u"用户笔名",on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, verbose_name=u"文章",on_delete=models.CASCADE)
     comments = models.CharField(max_length=200,verbose_name=u"评论")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
 
@@ -32,7 +32,7 @@ class ArticleComments(models.Model):
 
 
 class UsersFavorite(models.Model):
-    user = models.ForeignKey(UserProfile,verbose_name=u"用户笔名")
+    user = models.ForeignKey(UserProfile,verbose_name=u"用户笔名",on_delete=models.CASCADE)
     fav_id = models.IntegerField(default=0, verbose_name=u"数据id")
     fav_type = models.IntegerField(choices=((1,"文章"),(2,"组织"),(3,"作者")),default=1,verbose_name=u"收藏类型")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
@@ -54,8 +54,8 @@ class UserMessage(models.Model):
 
 
 class UserBrowsedArticles(models.Model):
-    user = models.ForeignKey(UserProfile,verbose_name=u"用户笔名")
-    article = models.ForeignKey(Article, verbose_name=u"文章")
+    user = models.ForeignKey(UserProfile,verbose_name=u"用户笔名",on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, verbose_name=u"文章",on_delete=models.CASCADE)
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
 
     class Meta:
