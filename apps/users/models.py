@@ -29,8 +29,8 @@ class UserProfile(AbstractUser):
 class EmailVerifyRecord(models.Model):
     code = models.CharField(max_length=20, verbose_name=u"验证码")
     email = models.EmailField(max_length=50, verbose_name=u"邮箱")
-    send_type = models.CharField(choices=(("register","注册"),("forget",u"找回密码")),max_length=20)
-    send_time = models.DateTimeField(default=datetime.now) # 括号要去掉，不然会根据model变异的时间生成，去掉才会根据class实例化的时间生成
+    send_type = models.CharField(choices=(("register","注册"),("forget",u"找回密码")),max_length=20,verbose_name=u"验证码类型")
+    send_time = models.DateTimeField(default=datetime.now,verbose_name=u"发送时间") # 括号要去掉，不然会根据model变异的时间生成，去掉才会根据class实例化的时间生成
 
     class Meta:
         verbose_name = u"邮箱验证码"
