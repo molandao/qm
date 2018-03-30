@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
-	<title>慕学网首页</title>
+	<title>青木首页</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
 </head>
@@ -48,10 +48,10 @@
 <header>
     <div class="c-box fff-box">
         <div class="wp header-box">
-            <p class="fl hd-tips">慕学网，在线学习平台！</p>
+            <p class="fl hd-tips">青木之森</p>
             <ul class="fr hd-bar">
-                <li>服务电话：<span>33333333</span></li>
-                <li><a href="login.html">[登录]</a></li>
+                <li>联系方式：<span>859084143@qq.com</span></li>
+                <li><a href="/login/">[登录]</a></li>
                 <li class="active"><a href="/forgetpwd/">[忘记密码]</a></li>
             </ul>
         </div>
@@ -92,7 +92,7 @@
                     <div class="error btns" id="jsForgetTips">{% for key,error in forget_form.errors.items %}{{ error }}{% endfor %}{{ msg }}</div>
                     <input type="hidden" name="sms_type" value="1">
                     <input class="btn btn-green" id="jsFindPwdBtn" type="submit" value="提交" />
-                    <p class="form-p" style="bottom:40px;">您还可以<a href="login.html"> [直接登录]</a></p>
+                    <p class="form-p" style="bottom:40px;">您还可以<a href="/login/"> [直接登录]</a></p>
                 <input type='hidden' name='csrfmiddlewaretoken' value='5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy' />
                     {% csrf_token %}
                 </form>
