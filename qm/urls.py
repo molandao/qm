@@ -15,7 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from users import views
+from users.views import LoginView, RegisterView,ActiveUserView,ForgetPwdView,ResetView,ModifyPwdView
+from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # not transfer function,just direct this fun
+    path('',views.home, name = 'index'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('register/',RegisterView.as_view(),name='register'),
+    path('captcha/',include('captcha.urls')),
+    path('active/<active_code>/',ActiveUserView.as_view(),name='user_active'),
+    path('forget/',ForgetPwdView.as_view(),name='forget_pwd'),
+    path('reset/<active_code>/', ResetView.as_view(), name='reset_pwd'),
+    path('modify_pwd/', ModifyPwdView.as_view(), name='modify_pwd'),
+
 ]
