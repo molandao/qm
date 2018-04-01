@@ -1,0 +1,36 @@
+{% extends 'org_base.html' %}
+{% block title %}作者列表{% endblock %}
+{% block page_path %}机构作者{% endblock %}
+
+{% block right_form %}
+<div class="right companycenter layout" >
+        <div class="head">
+            <h1>机构讲师</h1>
+        </div>
+        <div class="messagelist">
+            <div class=" butler_list butler-fav-box">
+                {% for author in all_authors %}
+                    <dl class="des users">
+                    <dt>
+                        <a href="">
+                        <img width="100" height="100" class="scrollLoading" data-url="{{ MEDIA_URL }}{{ author.image }}" src="{{ MEDIA_URL }}{{ author.image }}"/>
+                        </a>
+                    </dt>
+                    <dd>
+                        <h1>
+                            <a href="">
+                            {{ author.name }}<span class="key">已认证</span>
+                            </a>
+                        </h1>
+                        <ul class="cont clearfix">
+                            <li class="time">网龄：<span>{{ author.mu_years }}</span></li>
+                            <li class="c7">文章数：<span></span></li>
+                        </ul>
+                    </dd>
+                </dl>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

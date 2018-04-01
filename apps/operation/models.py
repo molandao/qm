@@ -31,7 +31,7 @@ class ArticleComments(models.Model):
         verbose_name_plural = verbose_name
 
 
-class UsersFavorite(models.Model):
+class UsersFavorite(models.Model):# 用户收藏
     user = models.ForeignKey(UserProfile,verbose_name=u"用户笔名",on_delete=models.CASCADE)
     fav_id = models.IntegerField(default=0, verbose_name=u"数据id")
     fav_type = models.IntegerField(choices=((1,"文章"),(2,"组织"),(3,"作者")),default=1,verbose_name=u"收藏类型")

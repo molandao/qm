@@ -2,10 +2,14 @@ from datetime import datetime
 
 from django.db import models
 
+from organization.models import ArticleOrg
+
 # Create your models here.
 
 
 class Article(models.Model):
+    article_org = models.ForeignKey(ArticleOrg, verbose_name=u"组织机构",null=True,blank=True, on_delete=models.CASCADE)
+
     name = models.CharField(max_length=50, verbose_name=u"文章名")
     desc = models.CharField(max_length=300, verbose_name=u"文章介绍")
     detail = models.TextField(verbose_name=u"文章详情")

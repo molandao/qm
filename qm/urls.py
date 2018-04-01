@@ -17,7 +17,15 @@ from django.contrib import admin
 from django.urls import path
 from users import views
 from users.views import LoginView, RegisterView,ActiveUserView,ForgetPwdView,ResetView,ModifyPwdView
+from organization.views import OrgView
 from django.urls import include
+
+from django.views.static import serve
+from qm.settings import MEDIA_ROOT
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,4 +39,9 @@ urlpatterns = [
     path('reset/<active_code>/', ResetView.as_view(), name='reset_pwd'),
     path('modify_pwd/', ModifyPwdView.as_view(), name='modify_pwd'),
 
-]
+    path('org/', include('organization.urls')),
+
+    # 配置上传文件的访问处理函数
+    path('media/<path>', serve, {"document_root":MEDIA_ROOT}),
+
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

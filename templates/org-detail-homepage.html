@@ -1,0 +1,67 @@
+
+{% extends 'org_base.html' %}
+{% block title %}机构首页{% endblock %}
+{% block page_path %}机构首页{% endblock %}
+
+{% block right_form %}
+<div class="right companycenter layout grouping" >
+    <div class="head">
+        <h1>全部课程</h1>
+        <a class="green fr more" href="org-detail-course.html">查看更多  >  </a>
+    </div>
+    <div class="brief group_list">
+        {% for article in all_articles %}
+            <div class="module1_5 box">
+                <a href="course-detail.html"><img width="214" src="{{ MEDIA_URL }}{{ article.image }}"/></a>
+                <div class="des">
+                    <a href="course-detail.html"><h2>{{ article.name }}</h2></a>
+                    <span class="fl">课时：<i class="key">{{ article.read_times }}</i></span>
+                    <span class="fr">参加人数：{{ article.readers }}</span>
+                </div>
+                <div class="bottom">
+                    <span class="fl">{{ article.article_org.name }}</span>
+                     <span class="star fr  notlogin" data-favid="13"  data-fav-type="4">{{ article.fav_nums }}</span>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+<div class="right companycenter layout" >
+    <div class="head">
+        <h1>机构作者</h1>
+        <a class="green fr more" href="org-detail-teachers.html">查看更多  >  </a>
+    </div>
+    {% for author in all_authors %}
+        <div class="diarys">
+            <div class="module5 share company-diary-box" style="padding:10px 0;">
+                <div class="left">
+                    <img class="pic" src="{{ MEDIA_URL }}{{ author.image }}"/>
+                    <p>昵称：{{ author.name }}</p>
+                </div>
+                <div class="right">
+                    <div class="top">
+                        <div class="fl">
+                            <a href=""><h1>java开发教程</h1></a>
+                            <span>注册于：{{ author.add_time }}</span>
+                        </div>
+                    </div>
+                    <div class="middle" style="border-bottom:0;">介绍： {{ author.writing_style }}</div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+
+
+
+</div>
+<div class="right companycenter layout" >
+    <div class="head">
+        <h1>机构介绍</h1>
+        <a class="green fr more" href="org-detail-desc.html">查看更多  >  </a>
+    </div>
+    <div class="cont">{{ article_org.desc }}<a href="/company/desc/22/"><span class="green">[查看更多]</span></a></div>
+</div>
+{% endblock %}
+

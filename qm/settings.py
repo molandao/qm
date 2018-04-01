@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'organization',
     'operation',
     'captcha',
+    'pure_pagination',
 ]
 # 重载setting方法
 AUTH_USER_MODEL = "users.UserProfile"
@@ -75,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -145,3 +147,7 @@ EMAIL_HOST_USER = "lxl.678@163.com"
 EMAIL_HOST_PASSWORD = "feihai1215"
 EMAIL_USE_TLS = False
 EMAIL_FROM = "lxl.678@163.com"
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

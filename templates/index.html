@@ -20,7 +20,9 @@
 		<div  class=" header">
  			<div class="top">
 				<div class="wp">
-					<div class="fl"><p>联系方式：<b>859084143@qq.com</b></p></div>
+					<div class="fl">
+                        <p>联系方式：<b>859084143@qq.com</b></p>
+                    </div>
 					<!--登录后跳转-->
 
 						{% if request.user.is_authenticated %}
@@ -47,8 +49,6 @@
                             <a style="color:white" class="fr registerbtn" href="{% url 'register' %}">注册</a>
                             <a style="color:white" class="fr loginbtn" href="{% url 'login' %}">登录</a>
 						{% endif %}
-
-
 
 				</div>
 			</div>
@@ -97,56 +97,50 @@
     </header>
 </section>
 <!--crumbs start-->
-
-
-
     <div class="banner">
-			<div class="wp">
-				<div class="fl">
-					<div class="imgslide">
-						<ul class="imgs">
-                            
-                            <li>
-                                    <a href="http://www.imooc.com">
-                                        <img width="1200" height="478" src="/static/media/banner/2016/11/57a801860001c34b12000460.jpg" />
-                                    </a>
-                                </li>
-                            
-                            <li>
-                                    <a href="http://www.projectsedu.com">
-                                        <img width="1200" height="478" src="/static/media/banner/2016/11/57aa86a0000145c512000460.jpg" />
-                                    </a>
-                                </li>
-                            
-                            <li>
-                                    <a href="http://www.projectsedu.com">
-                                        <img width="1200" height="478" src="/static/media/banner/2016/11/57a801860001c34b12000460_z4Vb8zl.jpg" />
-                                    </a>
-                                </li>
-                            
-                            <li>
-                                    <a href="http://www.projectsedu.com">
-                                        <img width="1200" height="478" src="/static/media/banner/2016/11/57aa86a0000145c512000460_nMwvoQD.jpg" />
-                                    </a>
-                                </li>
-                            
-                            <li>
-                                    <a href="http://www.projectsedu.com">
-                                        <img width="1200" height="478" src="/static/media/banner/2016/11/57aa86a0000145c512000460_GXIBATC.jpg" />
-                                    </a>
-                                </li>
-                            
+        <div class="wp">
+            <div class="fl">
+                <div class="imgslide">
+                    <ul class="imgs">
 
-						</ul>
-					</div>
-					<div class="unslider-arrow prev"></div>
-					<div class="unslider-arrow next"></div>
-				</div>
+                        <li>
+                            <a href="http://www.imooc.com">
+                                <img width="1200" height="478" src="/static/media/banner/2016/11/57a801860001c34b12000460.jpg" />
+                            </a>
+                            </li>
 
-				</div>
+                        <li>
+                            <a href="http://www.projectsedu.com">
+                                <img width="1200" height="478" src="/static/media/banner/2016/11/57aa86a0000145c512000460.jpg" />
+                            </a>
+                        </li>
 
+                        <li>
+                            <a href="http://www.projectsedu.com">
+                                <img width="1200" height="478" src="/static/media/banner/2016/11/57a801860001c34b12000460_z4Vb8zl.jpg" />
+                            </a>
+                        </li>
 
-			</div>
+                        <li>
+                            <a href="http://www.projectsedu.com">
+                                <img width="1200" height="478" src="/static/media/banner/2016/11/57aa86a0000145c512000460_nMwvoQD.jpg" />
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="http://www.projectsedu.com">
+                                <img width="1200" height="478" src="/static/media/banner/2016/11/57aa86a0000145c512000460_GXIBATC.jpg" />
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="unslider-arrow prev"></div>
+                <div class="unslider-arrow next"></div>
+            </div>
+
+            </div>
+
+    </div>
 <!--banner end-->
 <!--feature start-->
 	<section>

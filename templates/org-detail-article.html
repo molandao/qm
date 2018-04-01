@@ -1,0 +1,37 @@
+{% extends 'org_base.html' %}
+{% block title %}机构文章列表{% endblock %}
+{% block page_path %}机构文章{% endblock %}
+
+{% block right_form %}
+<div class="right companycenter layout" >
+		<div class="head">
+			<h1>机构文章</h1>
+		</div>
+		<div class="brief group_list">
+            {% for article in all_articles %}
+                <div class="module1_5 box">
+                    <a class="comp-img-box" href="course-detail.html">
+                        <img width="214" height="195" src="{{ MEDIA_URL }}{{ article.image }}"/>
+                    </a>
+                    <div class="des">
+                        <a href="course-detail.html"><h2>{{ article.name }}</h2></a>
+                        <span class="fl">阅读时间：<i class="key">{{ article.read_times }}</i></span>
+                        <span class="fr">学习人数：{{ article.readers }}</span>
+                    </div>
+                    <div class="bottom">
+                        <span class="fl">{{ article.article_org.name }}</span>
+                         <span class="star fr  notlogin" data-favid="13" data-fav-type="4">{{ article.fav_nums }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+
+		</div>
+			<div class="pageturn">
+                <ul class="pagelist">
+                    <li class="active"><a href="?page=1">1</a></li>
+                </ul>
+            </div>
+	</div>
+{% endblock %}

@@ -15,8 +15,9 @@ admin.site.register(ArticleOrg,ArticleOrgAdmin)
 
 
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ['org','name','mu_years','writing_style','click_nums','fav_nums','add_time']
-    search_fields = ['org','name','mu_years','writing_style','click_nums','fav_nums']
-    list_filter = ['org__name','name','mu_years','writing_style','click_nums','fav_nums','add_time']
+    list_display = ['name','org','mu_years','writing_style','click_nums','fav_nums','add_time']
+    search_fields = ['name','org','mu_years','writing_style','click_nums','fav_nums']
+    list_filter = ['name','org__name','mu_years','writing_style','click_nums','fav_nums','add_time']
+
 
 admin.site.register(Author, AuthorAdmin)
