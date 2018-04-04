@@ -42,6 +42,7 @@ urlpatterns = [
     path('org/', include('organization.urls')),
 
     path('articles/', include('articles.urls', namespace="articles")),
+
     # 配置上传文件的访问处理函数
     path('media/<path>', serve, {"document_root":MEDIA_ROOT}),
 

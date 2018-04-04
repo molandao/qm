@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import OrgView, AddUserSearchView, OrgHomeView, OrgArticleView, OrgDescView, OrgAuthorView, AddFavView
-
+from .views import AuthorListView, AuthorDetailView
 
 urlpatterns = [
     # 文章组织首页
@@ -20,5 +20,10 @@ urlpatterns = [
     # 机构收藏
     path('add_fav/', AddFavView.as_view(), name='add_fav'),
 
+    # 作者列表
+    path('authors/list/', AuthorListView.as_view(), name="authors_list"),
+
+    # 作者详情
+    path('authors/detail/<author_id>/', AuthorDetailView.as_view(), name='authors_detail'),
 
 ]

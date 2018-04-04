@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import View
 
-from .models import ArticleOrg
+from .models import ArticleOrg, Author
 from operation.models import UsersFavorite
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
@@ -182,3 +182,59 @@ class AddFavView(View):
                 return HttpResponse('{"status":"success", "msg":"已收藏"}', content_type='application/json')
             else:
                 return HttpResponse('{"status":"fail", "msg":"收藏出错"}', content_type='application/json')
+
+
+class AuthorListView(View):
+    # 作者列表
+    def get(self, request):
+        all_authors = Author.objects.all()
+
+        sort = request.GET.get('sort', "")
+        if sort:
+            if sort == "hot":
+                all_authors = all_authors.order_by("-click_nums")
+
+        sorted_author = Author.objects.all().order_by("-click_nums")[:3]
+
+        aut_nums = all_authors.count()
+
+        try:
+            page = request.GET.get('page',1)
+        except:
+            page = 1
+            # 对组织机构分页
+        p = Paginator(all_authors, 3, request=request)
+        authors = p.page(page)
+
+        return render(request, "authors-list.html", {
+            "all_authors":authors,
+            "sorted_author":sorted_author,
+            "sort":sort,
+            "aut_nums":aut_nums,
+        })
+
+
+class AuthorDetailView(View):
+    def get(self,request,author_id):
+        author = Author.objects.get(id=int(author_id))
+        author.click_nums += 1
+        author.save()
+
+        all_articles = Article.objects.filter(author=author)
+
+        sorted_author = Author.objects.all().order_by("-click_nums")[:3]
+
+        has_author_faved = False
+        if UsersFavorite.objects.filter(user=request.user,fav_type=3,fav_id=author.id):
+            has_author_faved = True
+
+        has_org_faved = False
+        if UsersFavorite.objects.filter(user=request.user,fav_type=2,fav_id=author.org.id):
+            has_org_faved = True
+        return render(request,"authors-detail.html",{
+            "author":author,
+            "all_articles":all_articles,
+            "sorted_author": sorted_author,
+            "has_author_faved":has_author_faved,
+            "has_org_faved":has_org_faved,
+        })

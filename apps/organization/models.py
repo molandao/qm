@@ -47,12 +47,12 @@ class Author(models.Model):
     # 爱好，文风，兴趣
     name = models.CharField(max_length=20,verbose_name=u"笔名")
     mu_years = models.IntegerField(default=0,verbose_name=u"网龄")
-    # work_company = models.CharField(max_length=50, verbose_name=u"就职公司")
-    # work_position = models.CharField(max_length=50,verbose_name=u"公司职位")
     writing_style = models.CharField(max_length=50,verbose_name=u"文章风格")
     click_nums = models.IntegerField(default=0,verbose_name=u"点击数")
     fav_nums = models.IntegerField(default=0,verbose_name=u"收藏数")
     image = models.ImageField(upload_to="authors/%Y%m",verbose_name=u"头像",max_length=100,default="")
+
+    age = models.IntegerField(default=18, verbose_name=u"年龄")
 
     add_time = models.DateTimeField(default=datetime.now)
 

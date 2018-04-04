@@ -1,0 +1,104 @@
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}文章作者 - 青木{% endblock %}
+{% block custom_bread %}
+    <section>
+        <div class="wp">
+            <ul  class="crumbs">
+                <li><a href="index.html">首页</a>></li>
+                <li><a href="{% url 'articles:article_list' %}">作者</a>></li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <section>
+	<div class="wp butler_list_box list">
+        <div class='left'>
+            <div class="butler_list layout">
+                <div class="head">
+                    <ul class="fl tab_header">
+                        <li {% if sort == '' %}class="active">{% endif %}><a href="?sort=">全部</a> </li>
+                        <li {% if sort == 'hot' %}class="active">{% endif %}><a href="?sort=hot">人气 &#8595;</a></li>
+                    </ul>
+                    <div class="fr butler-num">共<span class="key">{{ aut_nums }}</span>人&nbsp;&nbsp;&nbsp;</div>
+                </div>
+
+                {% for author in all_authors.object_list %}
+                    <dl class="des">
+                        <dt>
+                            <a href="{% url 'authors_detail' author.id %}">
+                                <div class="picpic">
+                                    <img width="100" height="100" class="scrollLoading" src="{{ MEDIA_URL }}{{ author.image }}"/>
+                                </div>
+                            </a>
+                            <div class="btn">
+                                <div class="fr btn2 bdsharebuttonbox">
+                                    <span class="fl">分享</span>
+                                    <a href="#" class="bds_more" data-cmd="more"></a>
+                                </div>
+                            </div>
+                        </dt>
+                        <dd>
+                            <a href="{% url 'authors_detail' author.id %}">
+                                <h1>{{ author.name }}</h1>
+                            </a>
+                            <ul class="cont">
+                                <li>网龄：<span>{{ author.mu_years }}</span></li>
+                                <li>年龄：<span>{{ author.age }}</span></li>
+                                <li>写作风格：<span>{{ author.writing_style }}</span></li>
+
+                            </ul>
+                        </dd>
+                        <a class="buy buyservice" href="{% url 'authors_detail' author.id %}"><br/>查看<br/>详情</a>
+                    </dl>
+                {% endfor %}
+            </div>
+            <div class="pageturn">
+                <ul class="pagelist">
+
+                    {% if all_authors.has_previous %}
+                        <li class="long"><a href="?{{ all_authors.previos_page_number.querystring }}">上一页</a></li>
+                    {% endif %}
+
+                    {% for page in all_authors.pages %}
+                        {% if page %}
+                            {% ifequal page all_authors.number %}
+                                <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                            {% else %}
+                                <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                            {% endifequal %}
+                        {% else %}
+                            <li class="none"><a href="">...</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if all_authors.has_next %}
+                        <li class="long"><a href="?{{ all_authors.next_page_number.querystring }}">下一页</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div class="right layout">
+            <div class="head">作者排行榜</div>
+            {% for hot_author in sorted_author %}
+            <dl class="des">
+                <span></span>
+                <a href="/diary/hk_detail/6/">
+                    <dt>
+                        <img width="50" height="50" class="scrollLoading"  src="{{ MEDIA_URL }}{{ hot_author.image }}"/>
+                    </dt>
+                </a>
+                <dd>
+                    <a href="/diary/hk_detail/6/">
+                        <h1 title="{{ hot_author.name }}">{{ hot_author.name }}</h1>
+                    </a>
+                    <p>写作风格：<span>{{ hot_author.writing_style }}</span></p>
+                </dd>
+            </dl>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
