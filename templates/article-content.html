@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}{{ content.name }} - 青木{% endblock %}
+{% block custom_bread %}
+    <section>
+        <div class="wp">
+            <ul  class="crumbs">
+                <li><a href="index.html">首页</a>></li>
+                <li><a href="{% url 'articles:article_list' %}">文章</a>></li>
+                <li><a href="{% url 'articles:article_detail' article.id %}">文章详情</a>></li>
+                <li><a href="{% url 'articles:article_info' article.id %}">文章信息</a>></li>
+                <li>文章</li>
+            </ul>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block custom_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/muke/base.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/muke/common-less.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/muke/course/learn-less.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/aui.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/aui.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/muke/course/common-less.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div id="main">
+        <div class="course-info-main clearfix w has-progress">
+            <div class="info-bar clearfix">
+                <div class="content-wrap clearfix">
+                    <div class="content">
+
+                    <div class="mod-chapters">
+                        <div class="r chapter-activechapte" >
+                            <br/>
+                            <h1>{{ content.name }}</h1><br/>
+                            <h3>{{ content.art_content }}</h3>
+                        </div>
+                    </div>
+
+                    </div>
+                <div class="aside r">
+                    <div class="bd">
+                        <div class="box mb40">
+                            <h4>作者有话说</h4>
+                            <div class="teacher-info">
+                                <a href="" target="_blank">
+                                    <img src='{{ MEDIA_URL }}{{ article.author.image }}' width='80' height='80' />
+                                </a>
+                                <span class="tit">
+                                  <a href="" target="_blank">{{ article.author.name }}</a>
+                                </span>
+                            </div>
+                            <div class="course-info-tip">
+                                <dl class="first">
+                                    <dt>课程须知</dt>
+                                    <dd class="autowrap">{{ article.youneed_know }}</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="cp-other-learned  js-comp-tabs">
+                            <div class="cp-header clearfix">
+                                <h2 class="cp-tit l">看过这篇文章的用户还看了</h2>
+                            </div>
+                            <div class="cp-body">
+                                <div class="cp-tab-pannel js-comp-tab-pannel" data-pannel="course" style="display: block">
+                                    <!-- img 200 x 112 -->
+                                    <ul class="other-list">
+
+                                        {% for relate_article in relate_articles %}
+                                        <li class="curr">
+                                            <a href="{% url 'articles:article_detail' relate_article.id %}" target="_blank">
+                                                <img src="{{ MEDIA_URL }}{{ relate_article.image }}" alt="{{ relate_article.name }}">
+                                                <span class="name autowrap">{{ relate_article.name }}</span>
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

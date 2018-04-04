@@ -37,6 +37,10 @@ class ArticleOrg(models.Model):
     def __str__(self):
         return self.name
 
+    def get_author_nums(self):
+        # 获取组织机构的作者数量
+        return self.author_set.all().count()
+
 
 class Author(models.Model):
     org = models.ForeignKey(ArticleOrg,verbose_name=u"所属组织",on_delete=models.CASCADE)
