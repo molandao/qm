@@ -4,10 +4,22 @@ from django.contrib.auth.backends import ModelBackend
 from .models import UserProfile,EmailVerifyRecord
 from django.db.models import Q
 from django.views.generic.base import View
-from .forms import LoginForm, RegisterForm, ForgetForm,ModifyPwdrForm
+from .forms import LoginForm, RegisterForm, ForgetForm,ModifyPwdrForm, UploadImageForm, UserInfoForm
 from django.contrib.auth.hashers import make_password
 
 from utils.email_send import send_register_email
+
+from utils.mixin_utils import LoginRequiredMixin
+
+from django.http import HttpResponse
+
+import json
+
+from operation.models import UserBrowsedArticles, UsersFavorite
+
+from organization.models import ArticleOrg, Author
+
+from articles.models import Article
 
 
 class CustomBackend(ModelBackend):
@@ -156,3 +168,139 @@ class ModifyPwdView(View):
             return render(request, "password_reset.html", {"email": email, "modify_form":modify_form})
 
 
+class UserInfoView(LoginRequiredMixin, View):
+    # 用户个人信息 需要登录
+    def get(self,request):
+        return render(request, 'usercenter-info.html',{})
+
+    def post(self, request):
+        # ModelForm
+        user_info_form = UserInfoForm(request.POST, instance=request.user)
+        # 修改,所以需要加入instance
+        if user_info_form.is_valid():
+            user_info_form.save()
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+
+        else:
+            return HttpResponse(json.dumps(user_info_form.errors), content_type='application/json')
+
+
+
+class UploadImvageView(LoginRequiredMixin,View):
+    # 用户头像修改
+    def post(self, request):
+        # 实例化，传进来的是request.POST  文件放在request.files
+        image_form = UploadImageForm(request.POST, request.FILES, instance=request.user)
+        if image_form.is_valid():
+            image = image_form.cleaned_data['image']
+            # request.user.image = image
+            # request.user.save()
+            image_form.save()
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse('{"status":"fail"}', content_type='application/json')
+
+
+class UpdatePwdView(View):
+
+    # 个人中心修改用户密码
+    def post(self, request):
+        modify_form = ModifyPwdrForm(request.POST)
+        if modify_form.is_valid():
+            pwd1 = request.POST.get("password1", "")
+            pwd2 = request.POST.get("password2", "")
+
+            if pwd1 != pwd2:
+                return HttpResponse('{"status":"fail","msg":"密码不一致"}', content_type='application/json')
+            user = request.user
+            user.password = make_password(pwd2)
+            user.save()
+
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse(json.dumps(modify_form.errors), content_type='application/json')
+
+
+class SendEmailCodeView(LoginRequiredMixin, View):
+    def get(self, request):
+        email = request.GET.get('email','')
+        # 判断邮箱存在，且没被注册过
+        if UserProfile.objects.filter(email=email):
+            return HttpResponse('{"email":"邮箱已存在}', content_type='application/json')
+
+        send_register_email(email,"update_email")
+
+        return HttpResponse('{"status":"success"}', content_type='application/json')
+
+
+class UpdateEmailView(LoginRequiredMixin, View):
+    def post(self, request):
+        email = request.POST.get('email','')
+        code = request.POST.get('code','')
+
+        # 验证
+        existed_records = EmailVerifyRecord.objects.filter(email=email, code=code, send_type='update_email')
+        if existed_records:
+            user = request.user
+            user.email = email
+            user.save()
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse('{"email":"验证码错误}', content_type='application/json')
+
+
+class BrowsedArticlesView(LoginRequiredMixin, View):
+    # 阅读过的文章
+    def get(self, request):
+        user_browsedarticles = UserBrowsedArticles.objects.filter(user=request.user)
+
+        return render(request, 'usercenter-read.html',{
+            "user_browsedarticles":user_browsedarticles,
+        })
+
+
+class MyFavOrgView(LoginRequiredMixin, View):
+    # 收藏的组织
+    def get(self, request):
+        org_list = []
+        fav_orgs = UsersFavorite.objects.filter(user=request.user, fav_type=2)
+        for fav_org in fav_orgs:
+            org_id = fav_org.fav_id
+            org = ArticleOrg.objects.get(id=org_id)
+            org_list.append(org)
+
+        return render(request, 'usercenter-fav-org.html',{
+            "org_list":org_list,
+
+        })
+
+
+class MyFavAuthorView(LoginRequiredMixin, View):
+    # 收藏的组织
+    def get(self, request):
+        author_list = []
+        fav_authors = UsersFavorite.objects.filter(user=request.user, fav_type=3)
+        for fav_author in fav_authors:
+            author_id = fav_author.fav_id
+            author = Author.objects.get(id=author_id)
+            author_list.append(author)
+
+        return render(request, 'usercenter-fav-author.html',{
+            "author_list":author_list,
+
+        })
+
+
+class MyFavArticleView(LoginRequiredMixin, View):
+    # 收藏的组织
+    def get(self, request):
+        article_list = []
+        fav_articles = UsersFavorite.objects.filter(user=request.user, fav_type=1)
+        for fav_article in fav_articles:
+            article_id = fav_article.fav_id
+            article = Article.objects.get(id=article_id)
+            article_list.append(article)
+
+        return render(request, 'usercenter-fav-article.html',{
+            "article_list":article_list,
+        })

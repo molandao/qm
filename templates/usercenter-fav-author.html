@@ -1,0 +1,63 @@
+{% extends 'usercenter-base.html' %}
+{% block title %}收藏-青木{% endblock %}
+{% load staticfiles %}
+{% block custom_bread %}
+    <section>
+        <div class="wp">
+            <ul  class="crumbs">
+                <li><a href="{% url 'index' %}">首页</a>></li>
+                <li><a href="/user/home/">个人中心</a>></li>
+                <li>收藏</li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+
+{% block right_content %}
+
+    <div class="right" >
+            <div class="personal_des Releasecont">
+                <div class="head">
+                    <h1>我的收藏</h1>
+                </div>
+            </div>
+            <div class="personal_des permessage">
+                <div class="head">
+                    <ul class="tab_header messagehead">
+                        <li><a href="{% url 'users:myfav_org' %}">组织机构</a> </li>
+                        <li class="active"><a href="{% url 'users:myfav_author' %}">作者</a></li>
+                        <li><a href="{% url 'users:myfav_article' %}">文章</a></li>
+                    </ul>
+                </div>
+                <div class="messagelist">
+                    {% for author in author_list %}
+                    <div class=" butler_list butler-fav-box">
+                        <dl class="des users">
+                            <dt>
+                                <a href="{% url 'authors_detail' author.id %}">
+                                    <img width="100" height="100" src="{{ MEDIA_URL }}{{ author.image }}"/>
+                                </a>
+                            </dt>
+                            <dd>
+                                <h1>
+                                    <a href="{% url 'authors_detail' author.id %}">
+                                        {{ author.name }}
+                                    </a>
+                                </h1>
+                                <ul class="cont clearfix">
+                                    <li class="time">网龄：<span>{{ author.mu_years }}</span></li>
+                                    <li class="c7">文章数：<span>{{ author.get_article_nums }}</span></li>
+                                </ul>
+                                <ul class="cont clearfix">
+                                    <li class="time">文章风格：<span>{{ author.writing_style }}</span></li>
+                                </ul>
+                            </dd>
+                            <div class="delete jsDeleteFav_author" data-favid="{{ author.id }}"></div>
+                        </dl>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

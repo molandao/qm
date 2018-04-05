@@ -3,18 +3,6 @@ from datetime import datetime
 from django.db import models
 
 # Create your models here.
-'''
-class CityDict(models.Model):
-    name = models.CharField(max_length=20,verbose_name=u"城市")
-    desc = models.CharField(max_length=200,verbose_name=u"描述")
-    add_time = models.DateTimeField(default=datetime.now)
-
-    class Meta:
-        verbose_name = u"城市"
-        verbose_name_plural = verbose_name
-    def __str__(self):
-        return self.name
-'''
 
 class ArticleOrg(models.Model):
     name = models.CharField(max_length=50,verbose_name=u"组织名称")
@@ -62,3 +50,6 @@ class Author(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_article_nums(self):
+        return self.article_set.all().count()

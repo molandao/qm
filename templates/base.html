@@ -23,31 +23,35 @@
 				<div class="wp">
 					<div class="fl"><p>联系方式：<b>859084143@qq.com</b></p></div>
 					<!--登录后跳转-->
-
 						{% if request.user.is_authenticated %}
                             <div class="personal">
-                            <dl class="user fr">
-                                <dd>qmadmin<img class="down fr" src="/static/images/top_down.png"/></dd>
-                                <dt><img width="20" height="20" src="/static/media/image/2016/12/default_big_14.png"/></dt>
-                            </dl>
-                            <div class="userdetail">
-                            	<dl>
-	                                <dt><img width="80" height="80" src="/static/media/image/2016/12/default_big_14.png"/></dt>
-	                                <dd>
-	                                    <h2>qm</h2>
-	                                    <p>qmadmin</p>
-	                                </dd>
+                                <dl class="user fr">
+                                    <dd>{{ user.username }}<img class="down fr" src="/static/images/top_down.png"/></dd>
+                                    <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
                                 </dl>
-                                <div class="btn">
-	                                <a class="personcenter fl" href="usercenter-info.html">进入个人中心</a>
-	                                <a class="fr" href="/logout/">退出</a>
+                                <div class="userdetail">
+                                    <dl>
+                                        <dt><img width="80" height="80" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
+                                        <dd>
+                                            <h2>{{ request.user.nick_name }}</h2>
+                                            <p>{{ request.user.username }}</p>
+                                        </dd>
+                                    </dl>
+                                    <div class="btn">
+                                        <a class="personcenter fl" href="{% url 'users:user_info' %}">进入个人中心</a>
+                                        <a class="personcenter fl" href="">投稿</a>
+
+                                        <a class="fr" href="/logout/">退出</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                            {% else %}
+                        {% else %}
                             <a style="color:white" class="fr registerbtn" href="{% url 'register' %}">注册</a>
                             <a style="color:white" class="fr loginbtn" href="{% url 'login' %}">登录</a>
-						{% endif %}
+                        {% endif %}
+                        <a href="usercenter-message.html">
+                            <div class="msg-num"><span id="MsgNum">0</span></div>
+                        </a>
 				</div>
 			</div>
 
@@ -57,12 +61,12 @@
                     <div class="searchbox fr">
                         <div class="selectContainer fl">
                             <span class="selectOption" id="jsSelectOption" data-value="course">
-                                文章板块
+                                文章
                             </span>
                             <ul class="selectMenu" id="jsSelectMenu">
-                                <li data-value="course">文章板块</li>
-                                <li data-value="org">组织机构</li>
-                                <li data-value="teacher">作者板块</li>
+                                <li data-value="artilces">文章</li>
+                                <li data-value="org">组织</li>
+                                <li data-value="authors">作者</li>
                             </ul>
                         </div>
                         <input id="search_keywords" class="fl" type="text" value="" placeholder="请输入搜索内容"/>
@@ -75,14 +79,18 @@
 				<div class="nav">
 					<div class="wp">
 						<ul>
-							<li class="active" ><a href="{% url 'index' %}">首页</a></li>
-							<li >
-								<a href="{% url 'articles:article_list' %}">文章板块<img class="hot" src="/static/images/nav_hot.png"></a>
+							<li {% if request.path == '/' %}class="active"{% endif %} >
+                                <a href="{% url 'index' %}">首页</a>
+                            </li>
+							<li {% if request.path|slice:'9' == '/articles' %}class="active"{% endif %}>
+								<a href="{% url 'articles:article_list' %}">文章板块</a>
 							</li>
-							<li >
-								<a href="">上传作者</a>
+							<li {% if request.path|slice:'12' == '/org/authors' %}class="active"{% endif %}>
+								<a href="{% url 'authors_list' %}">上传作者</a>
 							</li>
-							<li ><a href="{% url 'org_list' %}">所属组织</a></li>
+							<li {% if request.path|slice:'9' == '/org/list' %}class="active"{% endif %}>
+                                <a href="{% url 'org_list' %}">所属组织</a>
+                            </li>
 						</ul>
 					</div>
 				</div>

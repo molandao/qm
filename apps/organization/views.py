@@ -13,6 +13,8 @@ from articles.models import Article
 from django.contrib.auth import authenticate, login,logout
 
 import json
+
+from django.db.models import Q
 # Create your views here.
 
 
@@ -26,6 +28,12 @@ class OrgView(View):
         # city_id = request.GET.get('city',"")
         # if city_id:
         #    all_orgs = all_orgs.filter(city_id=int(city_id))
+
+        # 组织搜索
+        search_keywords = request.GET.get('keywords', "")
+        if search_keywords:
+            all_orgs = all_orgs.filter(Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords))
+
         hot_orgs = all_orgs.order_by("-click_nums")[:3]
         # 类别筛选
         category = request.GET.get('ct',"")
@@ -188,6 +196,11 @@ class AuthorListView(View):
     # 作者列表
     def get(self, request):
         all_authors = Author.objects.all()
+
+        # 文章搜索
+        search_keywords = request.GET.get('keywords', "")
+        if search_keywords:
+            all_authors = all_authors.filter(Q(name__icontains=search_keywords))
 
         sort = request.GET.get('sort', "")
         if sort:

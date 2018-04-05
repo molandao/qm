@@ -9,6 +9,8 @@ from operation.models import UsersFavorite, ArticleComments, UserBrowsedArticles
 from django.http import HttpResponse
 
 from utils.mixin_utils import LoginRequiredMixin
+
+from django.db.models import Q
 # mixin 基本代表一个基础的view
 
 # Create your views here.
@@ -17,6 +19,11 @@ from utils.mixin_utils import LoginRequiredMixin
 class ArticleListView(View):
     def get(self,request):
         all_articles = Article.objects.all().order_by("-add_time")
+
+        # 文章搜索
+        search_keywords = request.GET.get('keywords',"")
+        if search_keywords:
+            all_articles = all_articles.filter(Q(name__icontains=search_keywords)|Q(desc__icontains=search_keywords)|Q(detail__icontains=search_keywords))
 
         # 排序，最多阅读数，最多点击数
         sort = request.GET.get('sort', "")
@@ -33,7 +40,6 @@ class ArticleListView(View):
             # 对组织机构分页
         p = Paginator(all_articles, 9, request=request)
         articles = p.page(page)
-
 
         hot_articles = Article.objects.all().order_by("-click_nums")[:3]
 

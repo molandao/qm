@@ -34,17 +34,6 @@
 
 					</div>
 				</li>
-{#				<li>#}
-{#					<h2>所在地区</h2>#}
-{#					<div class="more">更多</div>#}
-{#					<div class="cont">#}
-{#                        <a href="?ct="><span class="{% ifequal city_id '' %}active2{% endifequal %}">全部</span></a>#}
-{#                        {% for city in all_citys %}#}
-{#                            <a href="?city={{ city.id }}"><span class="{% ifequal city_id city.id|stringformat:"i" %}active2{% endifequal %}">{{ city.name }}</span></a>#}
-{#                        {% endfor %}#}
-{##}
-{#					</div>#}
-{#				</li>#}
 			</ul>
 		</div>
 		<div class="all">共<span class="key">{{ org_nums }}</span>家</div>
@@ -79,14 +68,9 @@
                              </a>
                         </div>
                         <ul class="cont">
-                            <li class="first"><p class="pic9">文章数：<span>1</span></p><p class="c7">阅读人数：<span>1000</span></p></li>
-                            <li class="c8" style="padding-left:18px;">北京市海淀区中关村北大街</li>
+                            <li class="first"><p class="pic9">文章数：<span>1</span></p><p class="c7">阅读人数：<span> </span></p></li>
                             <li class="pic10" style="padding-left:18px;">经典文章：
-
-                                    <a href="/diary/19/">c语言基础入门</a>
-
-                                    <a href="/diary/16/">数据库基础</a>
-
+                                    <a href="/diary/16/">qmtest</a>
                             </li>
                         </ul>
                     </dd>
@@ -123,16 +107,12 @@
 		</div>
 	</div>
 	<div class="right companyright">
-			<div class="head">我要学习</div>
+			<div class="head">我要查询</div>
 			<form class="rightform" id="jsStayForm">
 				<div>
                     <img src="{% static 'images/rightform1.png' %}"/>
                     <input type="text" name="name" id="companyName" placeholder="名字" maxlength="25" />
                 </div>
-{#				<div>#}
-{#                <img src="{% static 'images/rightform2.png' %}"/>#}
-{#                    <input type="text" name="mobile" id="companyMobile" placeholder="联系电话"/>#}
-{#                </div>#}
 				<div>
                     <img src="{% static 'images/rightform3.png' %}"/>
                     <input type="text" name="article_name" id="companyAddress" placeholder="文章名" maxlength="50" />
@@ -151,7 +131,6 @@
                     <dt class="num fl">{{ forloop.counter }}</dt>
                     <dd>
                         <a href="/company/2/"><h1>{{ current_org.name }}</h1></a>
-{#                        <p>北京市</p>#}
                     </dd>
                 </dl>
             {% endfor %}
