@@ -21,7 +21,7 @@
         <div  class="header2 header">
             <div class="top">
                 <div class="wp">
-                    <div class="fl"><p>联系方式：<b>859084143@qq.com</b></p></div>
+                    <div class="fl"><p>联系方式：<b>869827921@qq.com</b></p></div>
 					<!--登录后跳转-->
                     {% if request.user.is_authenticated %}
                             <div class="personal">
@@ -39,9 +39,9 @@
                                     </dl>
                                     <div class="btn">
                                         <a class="personcenter fl" href="{% url 'users:user_info' %}">进入个人中心</a>
-                                        <a class="personcenter fl" href="">投稿</a>
+                                        <a class="personcenter fl" href="http://www.adore.xin/contribute/postpassage.php">投稿</a>
 
-                                        <a class="fr" href="/logout/">退出</a>
+                                        <a class="fr" href="{% url 'logout' %}">退出</a>
                                     </div>
                                 </div>
                             </div>
@@ -49,8 +49,8 @@
                             <a style="color:white" class="fr registerbtn" href="{% url 'register' %}">注册</a>
                             <a style="color:white" class="fr loginbtn" href="{% url 'login' %}">登录</a>
                         {% endif %}
-                        <a href="usercenter-message.html">
-                            <div class="msg-num"><span id="MsgNum">0</span></div>
+                        <a href="{% url 'users:mymessage' %}">
+                            <div class="msg-num"><span id="MsgNum">{{ request.user.unread_nums }}</span></div>
                         </a>
                     </div>
                 </div>
@@ -59,15 +59,11 @@
                 <div class="wp">
                     <img class="fl" style="width: 112px;height: 103px" src="{{ MEDIA_URL }}{{ article_org.image }}"/>
                     <div class="head fl">
-                        <h1>
-                            青木
-                            <img src="{% static 'images/authentication.png' %}"/>
-                            <img src="{% static 'images/gold.png' %}"/>
-                        </h1>
+                        <h1>{{ article_org.name }}</h1>
                         <p class="fl">
-                            <span class="fl" style="margin-top:8px;color:#848484;">推荐指数： </span>
-                            <span class="precision company-credit" data-star-scope="5.0"></span>
-                            <span class="key">5.0</span>
+{#                            <span class="fl" style="margin-top:8px;color:#848484;">推荐指数： </span>#}
+{#                            <span class="precision company-credit" data-star-scope="5.0"></span>#}
+{#                            <span class="key">5.0</span>#}
                         </p>
                     </div>
                     <div class="btn fr collectionbtn  notlogin"data-favid="22" data-fav-type="1">
@@ -82,7 +78,7 @@
 <section>
 	<div class="wp">
 		<ul  class="crumbs">
-            <li><a href="index.html">首页</a>></li>
+            <li><a href="{% url 'index' %}">首页</a>></li>
 			<li><a href="{% url 'org_list' %}">组织机构</a>></li>
 			<li>{% block page_path %}机构首页{% endblock %}</li>
 		</ul>

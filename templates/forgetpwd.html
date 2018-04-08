@@ -48,9 +48,9 @@
 <header>
     <div class="c-box fff-box">
         <div class="wp header-box">
-            <p class="fl hd-tips">青木之森</p>
+            <p class="fl hd-tips">青木</p>
             <ul class="fr hd-bar">
-                <li>联系方式：<span>859084143@qq.com</span></li>
+                <div class="fl"><p>联系方式：<b>869827921@qq.com</b></p></div>
                 <li><a href="/login/">[登录]</a></li>
                 <li class="active"><a href="/forgetpwd/">[忘记密码]</a></li>
             </ul>
@@ -61,16 +61,20 @@
     <div class="c-box bg-box">
         <div class="login-box clearfix">
             <div class="hd-login clearfix">
-                <a class="index-logo" href="index.html"></a>
+                <a class="index-logo" href="{% url 'index' %}"></a>
                 <h1>忘记密码</h1>
-                <a class="index-font" href="index.html">回到首页</a>
+                <a class="index-font" href="{% url 'index' %}">回到首页</a>
             </div>
             <div class="fl slide">
                 <div class="imgslide">
                     <ul class="imgs">
-                        <li><a href=""><img width="483" height="472" src="{% static 'images/57a801860001c34b12000460.jpg' %}" /></a></li>
-                        <li><a href=""><img width="483" height="472" src="{% static 'images/57a801860001c34b12000460.jpg' %}" /></a></li>
-                        <li><a href=""><img width="483" height="472" src="{% static 'images/57a801860001c34b12000460.jpg' %}" /></a></li>
+                        {% for banner_article in banner_articles %}
+                            <li>
+                                <a href="{% url 'articles:article_detail' banner_article.id %}">
+                                    <img width="483" height="472" src="{{ MEDIA_URL }}{{ banner_article.image }}"/>
+                                </a>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="unslider-arrow prev"></div>

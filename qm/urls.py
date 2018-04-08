@@ -25,15 +25,16 @@ from qm.settings import MEDIA_ROOT
 from django.conf import settings
 from django.conf.urls.static import static
 
+from users.views import LogoutView, IndexView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # not transfer function,just direct this fun
-    path('',views.home, name = 'index'),
+    path('', IndexView.as_view(), name = 'index'),
     path('login/', LoginView.as_view(), name='login'),
-    path('register/',RegisterView.as_view(),name='register'),
-    path('captcha/',include('captcha.urls')),
+    path('register/', RegisterView.as_view(),name='register'),
+    path('captcha/', include('captcha.urls')),
     path('active/<active_code>/',ActiveUserView.as_view(),name='user_active'),
     path('forget/',ForgetPwdView.as_view(),name='forget_pwd'),
     path('reset/<active_code>/', ResetView.as_view(), name='reset_pwd'),
@@ -45,7 +46,10 @@ urlpatterns = [
 
     path('users/', include('users.urls', namespace="users")),
 
+    path('logout/', LogoutView.as_view(), name='logout'),
+
     # 配置上传文件的访问处理函数
     path('media/<path>', serve, {"document_root":MEDIA_ROOT}),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

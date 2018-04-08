@@ -5,7 +5,7 @@
     <section>
         <div class="wp">
             <ul  class="crumbs">
-                <li><a href="index.html">首页</a>></li>
+                <li><a href="{% url 'index' %}">首页</a>></li>
                 <li><a href="{% url 'authors_list' %}">作者</a>></li>
                 <li>作者</li>
             </ul>
@@ -35,7 +35,7 @@
                             </div>
                         </dt>
                         <dd>
-                            <a href="/diary/hk_detail/10/">
+                            <a href="{% url 'authors_detail' author.id %}">
                                 <h1>{{ author.name }}</h1>
                             </a>
                             <ul class="cont">
@@ -51,7 +51,7 @@
                 <div class="left layout">
 				<div class="head">
 					<ul class="tab_header">
-						<li class="active"><a href="">全部课程</a> </li>
+						<li class="active"><a href="">全部文章</a> </li>
 					</ul>
 				</div>
                     <div class="companycenter">

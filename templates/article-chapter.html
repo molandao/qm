@@ -5,7 +5,7 @@
     <section>
         <div class="wp">
             <ul  class="crumbs">
-                <li><a href="index.html">首页</a>></li>
+                <li><a href="{% url 'index' %}">首页</a>></li>
                 <li><a href="{% url 'articles:article_list' %}">文章</a>></li>
                 <li><a href="{% url 'articles:article_detail' article.id %}">文章详情</a>></li>
                 <li>文章信息</li>
@@ -36,7 +36,7 @@
                 <div class="statics clearfix">
                     <div class="static-item ">
                         <span class="meta-value"><strong>{{ article.get_art_len_display }}</strong></span>
-                        <span class="meta">难度</span>
+                        <span class="meta">长度</span>
                         <em></em>
                     </div>
                     <div class="static-item static-time">
@@ -63,7 +63,7 @@
                     </ul>
                 </div>
                 <div id="notice" class="clearfix">
-                    <div class="l"> <strong>文章公告:</strong> <a  href="javascript:void(0)"></a> </div>
+{#                    <div class="l"> <strong>文章公告:</strong> <a  href="javascript:void(0)"></a> </div>#}
                 </div>
 
                 <div class="mod-chapters">
@@ -87,16 +87,16 @@
                     <div class="box mb40">
                         <h4>作者有话说</h4>
                         <div class="teacher-info">
-                            <a href="/u/315464/courses?sort=publish" target="_blank">
+                            <a href="{% url 'authors_detail' article.author.id %}" target="_blank">
                                 <img src='{{ MEDIA_URL }}{{ article.author.image }}' width='80' height='80' />
                             </a>
                             <span class="tit">
-                              <a href="/u/315464/courses?sort=publish" target="_blank">{{ article.author.name }}</a>
+                              <a href="{% url 'authors_detail' article.author.id %}" target="_blank">{{ article.author.name }}</a>
                             </span>
                         </div>
                         <div class="course-info-tip">
                             <dl class="first">
-                                <dt>课程须知</dt>
+                                <dt>文章须知</dt>
                                 <dd class="autowrap">{{ article.youneed_know }}</dd>
                             </dl>
                         </div>

@@ -89,7 +89,7 @@ class ArticleInfoView(LoginRequiredMixin, View):
         article.readers += 1
         article.save()
 
-        # 把user和article连接起来，可以查询用户是否已经关联了课程
+        # 把user和article连接起来，可以查询用户是否已经关联了文章
         user_arts = UserBrowsedArticles.objects.filter(user=request.user, article=article)
         if not user_arts:
             user_arts = UserBrowsedArticles(user=request.user, article=article)
@@ -124,7 +124,7 @@ class ArticleCommentsView(LoginRequiredMixin, View):
 
 
 class AddCommentsView(View):
-    # 用户添加课程评论
+    # 用户添加文章评论
     def post(self,request):
         if not request.user.is_authenticated:
             return HttpResponse('{"status":"fail", "msg":"用户未登录"}', content_type='application/json')
@@ -152,7 +152,7 @@ class ShowContView(View):
         article = content.lesson.article
         article.readers += 1
         article.save()
-        # 把user和article连接起来，可以查询用户是否已经关联了课程
+        # 把user和article连接起来，可以查询用户是否已经关联了文章
         user_arts = UserBrowsedArticles.objects.filter(user=request.user, article=article)
         if not user_arts:
             user_arts = UserBrowsedArticles(user=request.user, article=article)
@@ -163,7 +163,7 @@ class ShowContView(View):
         all_user_articles = UserBrowsedArticles.objects.filter(user_id__in=user_ids)
         # 取出所有文章id
         article_ids = [user_article.article.id for user_article in all_user_articles]
-        relate_articles = Article.objects.filter(id__in=article_ids).order_by("-click_nums")[:2]
+        relate_articles = Article.objects.filter(id__in=article_ids).order_by("-click_nums")[1:3]
 
         return render(request ,"article-content.html",{
             "article":article,

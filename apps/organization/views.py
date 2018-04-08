@@ -23,12 +23,6 @@ class OrgView(View):
     def get(self,request):
         # 组织机构
         all_orgs = ArticleOrg.objects.all()
-        # all_citys = CityDict.objects.all()
-        # 取出筛选城市
-        # city_id = request.GET.get('city',"")
-        # if city_id:
-        #    all_orgs = all_orgs.filter(city_id=int(city_id))
-
         # 组织搜索
         search_keywords = request.GET.get('keywords', "")
         if search_keywords:
@@ -40,14 +34,12 @@ class OrgView(View):
         if category:
            all_orgs = all_orgs.filter(category=category)
 
-
         sort= request.GET.get('sort',"")
         if sort:
             if sort == "readers":
                 all_orgs = all_orgs.order_by("-readers")
             elif sort == "articles":
                 all_orgs = all_orgs.order_by("-article_nums")
-
 
         org_nums = all_orgs.count()
 
@@ -62,7 +54,6 @@ class OrgView(View):
         return render(request,"org_list.html",{
             "all_orgs":orgs,
             "org_nums":org_nums,
-            # "city_id":city_id,
             "category":category,
             "hot_orgs":hot_orgs,
             "sort":sort,
@@ -89,6 +80,9 @@ class OrgHomeView(View):
         all_authors = article_org.author_set.all()[:2]
 
         current_page = "home"
+
+        article_org.click_nums += 1
+        article_org.save()
 
         has_fav = False
         if request.user.is_authenticated:
@@ -179,6 +173,26 @@ class AddFavView(View):
         if exist_records:
             # 记录已存在，则为取消收藏
             exist_records.delete()
+
+            if int(fav_type)==1:
+                article = Article.objects.get(id=int(fav_id))
+                article.fav_nums -= 1
+                if article.fav_nums < 0:
+                    article.fav_nums = 0
+                article.save()
+            elif int(fav_type) == 2:
+                article_org = ArticleOrg.objects.get(id=int(fav_id))
+                article_org.fav_nums -= 1
+                if article_org.fav_nums < 0:
+                    article_org.fav_nums = 0
+                article_org.save()
+            elif int(fav_type) == 3:
+                author = Author.objects.get(id=int(fav_id))
+                author.fav_nums -= 1
+                if author.fav_nums < 0:
+                    author.fav_nums = 0
+                author.save()
+
             return HttpResponse('{"status":"success","msg":"收藏"}', content_type='application/json')
         else:
             user_fav = UsersFavorite()
@@ -187,6 +201,20 @@ class AddFavView(View):
                 user_fav.fav_id = int(fav_id)
                 user_fav.fav_type = int(fav_type)
                 user_fav.save()
+
+                if int(fav_type) == 1:
+                    article = Article.objects.get(id=int(fav_id))
+                    article.fav_nums += 1
+                    article.save()
+                elif int(fav_type) == 2:
+                    article_org = ArticleOrg.objects.get(id=int(fav_id))
+                    article_org.fav_nums += 1
+                    article_org.save()
+                elif int(fav_type) == 3:
+                    author = Author.objects.get(id=int(fav_id))
+                    author.fav_nums += 1
+                    author.save()
+
                 return HttpResponse('{"status":"success", "msg":"已收藏"}', content_type='application/json')
             else:
                 return HttpResponse('{"status":"fail", "msg":"收藏出错"}', content_type='application/json')

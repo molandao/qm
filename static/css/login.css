@@ -57,14 +57,14 @@ a:hover{
     margin-bottom:15px;
     padding-top:32px;
     padding-left:190px;
-    background:url(../images/logo.png) no-repeat 0 center;
+    background:url(../images/logo_login.png) no-repeat 0 center;
 }
 .index-logo{
     position:absolute;
     left:0;
     top:0;
     display:block;
-    width:190px;
+    width:210px;
     height:100px;
     cursor: pointer;
 }

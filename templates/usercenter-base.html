@@ -24,12 +24,12 @@
 		<div  class="header2 header">
  			<div class="top">
 				<div class="wp">
-					<div class="fl"><p>联系方式：<b>859084143@qq.com</b></p></div>
+					<div class="fl"><p>联系方式：<b>869827921@qq.com</b></p></div>
 					<!--登录后跳转-->
                         {% if request.user.is_authenticated %}
                             <div class="personal">
                                 <dl class="user fr">
-                                    <dd>{{ user.username }}<img class="down fr" src="/static/images/top_down.png"/></dd>
+                                    <dd>{{ user.nick_name }}<img class="down fr" src="/static/images/top_down.png"/></dd>
                                     <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
                                 </dl>
                                 <div class="userdetail">
@@ -42,9 +42,9 @@
                                     </dl>
                                     <div class="btn">
                                         <a class="personcenter fl" href="{% url 'users:user_info' %}">进入个人中心</a>
-                                        <a class="personcenter fl" href="">投稿</a>
+                                        <a class="personcenter fl" href="http://www.adore.xin/contribute/postpassage.php">投稿</a>
 
-                                        <a class="fr" href="/logout/">退出</a>
+                                        <a class="fr" href="{% url 'logout' %}">退出</a>
                                     </div>
                                 </div>
                             </div>
@@ -52,15 +52,15 @@
                             <a style="color:white" class="fr registerbtn" href="{% url 'register' %}">注册</a>
                             <a style="color:white" class="fr loginbtn" href="{% url 'login' %}">登录</a>
                         {% endif %}
-                        <a href="usercenter-message.html">
-                            <div class="msg-num"><span id="MsgNum">0</span></div>
+                        <a href="{% url 'users:mymessage' %}">
+                            <div class="msg-num"><span id="MsgNum">{{ request.user.unread_nums }}</span></div>
                         </a>
                     </div>
                 </div>
 
     <div class="middle">
         <div class="wp">
-            <a href="index.html"><img class="fl" src="/static/images/logo2.png"/></a>
+            <a href="{% url 'index' %}"><img class="fl" src="/static/images/logo2.png"/></a>
             <h1>我的青木</h1>
         </div>
     </div>
@@ -73,8 +73,8 @@
     <section>
         <div class="wp">
             <ul  class="crumbs">
-                <li><a href="index.html">首页</a>></li>
-                <li><a href="/user/home/">个人中心</a>></li>
+                <li><a href="{% url 'index' %}">首页</a>></li>
+                <li><a href="{% url 'users:user_info' %}">个人中心</a>></li>
                 <li>个人信息</li>
             </ul>
         </div>
@@ -88,8 +88,8 @@
             <li class="active2"><a href="{% url 'users:user_info' %}">个人资料</a></li>
             <li ><a href="{% url 'users:articles_read' %}">曾阅读的文章</a></li>
             <li ><a href="{% url 'users:myfav_org' %}">我的收藏</a></li>
-            <li ><a href="">我要投稿</a></li>
-            <li ><a href="usercenter-message.html" style="position: relative;">我的消息</a></li>
+            <li ><a href="http://www.adore.xin/contribute/postpassage.php">我要投稿</a></li>
+            <li ><a href="{% url 'users:mymessage' %}" style="position: relative;">我的消息</a></li>
         </ul>
 	</div>
 
@@ -125,7 +125,7 @@
                             <i class="error-tips"></i>
                         </li>
 						<li>生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日：
-                           <input type="text" id="birth_day" name="birday" value="2009年9月2日" readonly="readonly"/>
+                           <input type="text" id="birth_day" name="birday" value="20018年6月1日" readonly="readonly"/>
                             <i class="error-tips"></i>
 						</li>
 						<li>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：
@@ -133,7 +133,7 @@
 							<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female" checked="checked">女</label>
 						</li>
 						<li class="p_infor_city">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：
-                            <input type="text" name="address" id="address" placeholder="请输入你的地址" value="我来自银河系" maxlength="10">
+                            <input type="text" name="address" id="address" placeholder="请输入你的地址" value="来自银河系" maxlength="10">
 						    <i class="error-tips"></i>
                         </li>
 						<li>手&nbsp;&nbsp;机&nbsp;&nbsp;号：

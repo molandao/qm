@@ -5,7 +5,7 @@
 {% block right_form %}
 <div class="right companycenter layout" >
         <div class="head">
-            <h1>机构讲师</h1>
+            <h1>机构作者</h1>
         </div>
         <div class="messagelist">
             <div class=" butler_list butler-fav-box">
@@ -19,12 +19,12 @@
                     <dd>
                         <h1>
                             <a href="">
-                            {{ author.name }}<span class="key">已认证</span>
+                            {{ author.name }}
                             </a>
                         </h1>
                         <ul class="cont clearfix">
                             <li class="time">网龄：<span>{{ author.mu_years }}</span></li>
-                            <li class="c7">文章数：<span></span></li>
+                            <li class="c7">文章数：<span>{{ author.get_article_nums }}</span></li>
                         </ul>
                     </dd>
                 </dl>

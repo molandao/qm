@@ -8,7 +8,7 @@
     <section>
         <div class="wp">
             <ul  class="crumbs">
-                <li><a href="index.html">首页</a>></li>
+                <li><a href="{% url 'index' %}">首页</a>></li>
                 <li>组织机构</li>
             </ul>
         </div>
@@ -59,22 +59,15 @@
                              <a href="{% url 'org_home' article_org.id %}">
                                  <h1>{{ article_org.name }}</h1>
                                  <div class="pic fl">
-
-                                         <img src="{% static 'images/authentication.png' %}"/>
-
-                                         <img src="{% static 'images/gold.png' %}"/>
-
                                  </div>
                              </a>
                         </div>
                         <ul class="cont">
-                            <li class="first"><p class="pic9">文章数：<span>1</span></p><p class="c7">阅读人数：<span> </span></p></li>
-                            <li class="pic10" style="padding-left:18px;">经典文章：
-                                    <a href="/diary/16/">qmtest</a>
-                            </li>
+                            <li class="first"><p class="pic9">文章数：<span>{{ article_org.article_nums }}</span></p>
+                                <p class="c7">阅读人数：<span> {{ article_org.readers }}</span></p></li>
                         </ul>
                     </dd>
-                    <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
+                    <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>查看<br/>更多</div>
                 </dl>
             {% endfor %}
 
@@ -107,7 +100,7 @@
 		</div>
 	</div>
 	<div class="right companyright">
-			<div class="head">我要查询</div>
+			<div class="head">我想看...</div>
 			<form class="rightform" id="jsStayForm">
 				<div>
                     <img src="{% static 'images/rightform1.png' %}"/>
@@ -130,7 +123,7 @@
                 <dl class="des">
                     <dt class="num fl">{{ forloop.counter }}</dt>
                     <dd>
-                        <a href="/company/2/"><h1>{{ current_org.name }}</h1></a>
+                        <a href="{% url 'org_home' current_org.id %}"><h1>{{ current_org.name }}</h1></a>
                     </dd>
                 </dl>
             {% endfor %}

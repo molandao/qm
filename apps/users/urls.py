@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import UserInfoView, UploadImvageView, UpdatePwdView, SendEmailCodeView, UpdateEmailView, BrowsedArticlesView
-from .views import MyFavOrgView, MyFavAuthorView, MyFavArticleView
+from .views import MyFavOrgView, MyFavAuthorView, MyFavArticleView, MyMessageView
 
 app_name = '[users]'
 urlpatterns = [
@@ -23,12 +23,15 @@ urlpatterns = [
     # 读过的文章
     path('articles_read/', BrowsedArticlesView.as_view(), name='articles_read'),
 
-    # 读过的文章
+    # 收藏的组织
     path('myfav/org/', MyFavOrgView.as_view(), name='myfav_org'),
 
-    # 读过的文章
+    # 收藏的作者
     path('myfav/author/', MyFavAuthorView.as_view(), name='myfav_author'),
 
-    # 读过的文章
+    # 收藏的文章
     path('myfav/article/', MyFavArticleView.as_view(), name='myfav_article'),
+
+    # 我的消息
+    path('mymessage/', MyMessageView.as_view(), name='mymessage'),
 ]

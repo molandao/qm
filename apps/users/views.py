@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.backends import ModelBackend
 from .models import UserProfile,EmailVerifyRecord
 from django.db.models import Q
@@ -11,15 +11,21 @@ from utils.email_send import send_register_email
 
 from utils.mixin_utils import LoginRequiredMixin
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 import json
 
-from operation.models import UserBrowsedArticles, UsersFavorite
+from operation.models import UserBrowsedArticles, UsersFavorite,UserMessage
 
 from organization.models import ArticleOrg, Author
 
 from articles.models import Article
+
+from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
+
+from .models import Banner
+
+from django.urls import reverse
 
 
 class CustomBackend(ModelBackend):
@@ -53,7 +59,11 @@ def home(request):
 
 class LoginView(View):
     def get(self,request):
-        return render(request, "login.html", {})
+        banner_articles = Article.objects.filter(is_banner=True)[:3]
+
+        return render(request, "login.html", {
+            "banner_articles":banner_articles
+        })
     def post(self,request):
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
@@ -66,7 +76,8 @@ class LoginView(View):
                 if user.is_active:
 
                     login(request, user)
-                    return render(request, "index.html")
+
+                    return HttpResponseRedirect(reverse("index"))
                 else:
                     return render(request, "login.html", {"msg": "用户未激活"})
             else:
@@ -80,7 +91,12 @@ class LoginView(View):
 class RegisterView(View):
     def get(self,request):
         register_form = RegisterForm()
-        return render(request, "register.html", {'register_form':register_form})
+        banner_articles = Article.objects.filter(is_banner=True)[:3]
+
+        return render(request, "register.html", {
+            'register_form':register_form,
+            "banner_articles":banner_articles,
+        })
     def post(self,request):
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
@@ -97,6 +113,12 @@ class RegisterView(View):
             #加密密码
             user_profile.password = make_password(pass_word)
             user_profile.save()
+
+            # 写入欢迎注册的消息
+            user_message = UserMessage()
+            user_message.user = user_profile.id
+            user_message.message = "欢迎注册青木"
+            user_message.save()
 
             send_register_email(user_name,"register")
             return render(request, "login.html")
@@ -123,7 +145,12 @@ class ActiveUserView(View):
 class ForgetPwdView(View):
     def get(self,request):
         forget_form = ForgetForm()
-        return render(request,"forgetpwd.html",{"forget_form":forget_form})
+        banner_articles = Article.objects.filter(is_banner=True)[:3]
+
+        return render(request,"forgetpwd.html",{
+            "forget_form":forget_form,
+            "banner_articles":banner_articles
+        })
     def post(self,request):
         forget_form = ForgetForm(request.POST)
         if forget_form.is_valid():
@@ -304,3 +331,64 @@ class MyFavArticleView(LoginRequiredMixin, View):
         return render(request, 'usercenter-fav-article.html',{
             "article_list":article_list,
         })
+
+
+class MyMessageView(LoginRequiredMixin,View):
+    def get(self, request):
+        all_messages = UserMessage.objects.filter(user=request.user.id)
+
+        # 用户进入个人消息后清空未读消息
+        all_unread_messages = UserMessage.objects.filter(user=request.user.id, has_read=False)
+        for unread_message in all_unread_messages:
+            unread_message.has_read = True
+            unread_message.save()
+
+        try:
+            page = request.GET.get('page',1)
+        except:
+            page = 1
+            # 对组织机构分页
+        p = Paginator(all_messages, 4, request=request)
+        messages = p.page(page)
+
+        return render(request, 'usercenter-message.html', {
+            "messages":messages,
+        })
+
+
+class LogoutView(View):
+    # 用户登出
+    def get(self, request):
+        logout(request)
+        # 重定向
+        return HttpResponseRedirect(reverse("index"))
+
+
+class IndexView(View):
+    # 首页
+    def get(self, request):
+        all_banners = Banner.objects.all().order_by('index')
+        articles = Article.objects.filter(is_banner=False)[:6]
+        banner_articles = Article.objects.filter(is_banner=True)[:3]
+        article_orgs = ArticleOrg.objects.all()[:10]
+
+        return render(request, 'index.html', {
+            "all_banners":all_banners,
+            "articles":articles,
+            "banner_articles":banner_articles,
+            "article_orgs":article_orgs,
+        })
+
+
+# def page_not_found(request):
+#     # 全局
+#     from django.shortcuts import render_to_response
+#     response = render_to_response('404.html',{})
+#     response.status_code = 404
+#     return response
+#
+# def page_error(request):
+#     from django.shortcuts import render_to_response
+#     response = render_to_response('500.html', {})
+#     response.status_code = 500
+#     return response

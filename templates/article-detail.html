@@ -5,7 +5,7 @@
     <section>
         <div class="wp">
             <ul  class="crumbs">
-                <li><a href="index.html">首页</a>></li>
+                <li><a href="{% url 'index' %}">首页</a>></li>
                 <li><a href="{% url 'articles:article_list' %}">文章</a></li>
                 <li>文章详情</li>
             </ul>
@@ -27,7 +27,7 @@
 
                         </div>
                         <div class="des">
-                            <h1 title="django 从入门到精通体验开始了">{{ article.name }}</h1>
+                            <h1 title="{{ article.name }}">{{ article.name }}</h1>
                             <span class="key">{{ article.desc }}</span>
                             <div class="prize">
                                 <span class="fl">长度：<i class="key">{{ article.get_art_len_display }}</i></span>
@@ -70,7 +70,7 @@
                             <h1>组织机构</h1>
                         </div>
                         <div class="pic">
-                            <a href="/company/14/">
+                            <a href="{% url 'org_home' article.article_org.id %}">
                                 <img width="150" height="80" src="{{ MEDIA_URL }}{{ article.article_org.image }}"/>
                             </a>
                         </div>
