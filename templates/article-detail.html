@@ -74,7 +74,7 @@
                                 <img width="150" height="80" src="{{ MEDIA_URL }}{{ article.article_org.image }}"/>
                             </a>
                         </div>
-                        <a href="/company/14/">
+                        <a href="{% url 'org_home' article.article_org.id %}">
                             <h2 class="center" title="">{{ article.article_org.name }}</h2>
                         </a>
                         <div class="btn  notlogin"data-favid="14" id="jsRightBtn">

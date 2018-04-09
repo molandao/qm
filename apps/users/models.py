@@ -27,7 +27,7 @@ class UserProfile(AbstractUser):
         return UserMessage.objects.filter(user=self.id, has_read=False).count()
 
 
-    # 为了避免循环引用，分层设计.operation models.py (courses ,organzation, users)
+    # 为了避免循环引用，分层设计.operation models.py (articles ,organzation, users)
     # 邮箱验证码可以考虑放在users里，首页轮播图也是.
 
 class EmailVerifyRecord(models.Model):

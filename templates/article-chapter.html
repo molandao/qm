@@ -63,11 +63,10 @@
                     </ul>
                 </div>
                 <div id="notice" class="clearfix">
-{#                    <div class="l"> <strong>文章公告:</strong> <a  href="javascript:void(0)"></a> </div>#}
                 </div>
 
                 <div class="mod-chapters">
-                    <br/>
+                    <br/><br/>
                     {% for lesson in article.get_article_lesson %}
                     <div class="chapter chapter-active" >
                         <h2>
@@ -108,9 +107,7 @@
                         </div>
                         <div class="cp-body">
                             <div class="cp-tab-pannel js-comp-tab-pannel" data-pannel="course" style="display: block">
-                                <!-- img 200 x 112 -->
                                 <ul class="other-list">
-
                                     {% for relate_article in relate_articles %}
                                     <li class="curr">
                                         <a href="{% url 'articles:article_detail' relate_article.id %}" target="_blank">

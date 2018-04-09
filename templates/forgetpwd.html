@@ -34,7 +34,7 @@
         </div>
         <div class="box">
             <span class="word2">验&nbsp;&nbsp;证&nbsp;&nbsp;码</span>
-            <input type="text" name="code" id="jsResetCode" placeholder="请输入手机验证码"/>
+            <input type="text" name="code" id="jsResetCode" placeholder="请输入验证码"/>
         </div>
         <div class="error btns" id="jsSetNewPwdTips"></div>
         <div class="button">
@@ -52,7 +52,7 @@
             <ul class="fr hd-bar">
                 <div class="fl"><p>联系方式：<b>869827921@qq.com</b></p></div>
                 <li><a href="/login/">[登录]</a></li>
-                <li class="active"><a href="/forgetpwd/">[忘记密码]</a></li>
+                <li class="active"><a href="/register/">[注册]</a></li>
             </ul>
         </div>
     </div>
@@ -91,7 +91,6 @@
                     <div class="form-group captcha1 marb38">
                         <label>验&nbsp;证&nbsp;码</label>
                         {{ forget_form.captcha }}
-{#                        <img src="/captcha/image/997454dc58799e806f18d21eac296581a8c6ef02/" alt="captcha" class="captcha" /> <input id="id_captcha_0" name="captcha_0" type="hidden" value="997454dc58799e806f18d21eac296581a8c6ef02" /> <input autocomplete="off" id="id_captcha_1" name="captcha_1" type="text" />#}
                     </div>
                     <div class="error btns" id="jsForgetTips">{% for key,error in forget_form.errors.items %}{{ error }}{% endfor %}{{ msg }}</div>
                     <input type="hidden" name="sms_type" value="1">

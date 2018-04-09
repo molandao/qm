@@ -30,7 +30,7 @@
                             <div class="personal">
                                 <dl class="user fr">
                                     <dd>{{ user.nick_name }}<img class="down fr" src="/static/images/top_down.png"/></dd>
-                                    <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
+                                    <dt><a href="{% url 'users:user_info' %}"><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></a></dt>
                                 </dl>
                                 <div class="userdetail">
                                     <dl>
@@ -85,11 +85,11 @@
 	<div class="wp list personal_list">
 	<div class="left">
         <ul>
-            <li class="active2"><a href="{% url 'users:user_info' %}">个人资料</a></li>
-            <li ><a href="{% url 'users:articles_read' %}">曾阅读的文章</a></li>
-            <li ><a href="{% url 'users:myfav_org' %}">我的收藏</a></li>
-            <li ><a href="http://www.adore.xin/contribute/postpassage.php">我要投稿</a></li>
-            <li ><a href="{% url 'users:mymessage' %}" style="position: relative;">我的消息</a></li>
+            <li class="{% ifequal current_page 'info' %}active2{% endifequal %}"><a href="{% url 'users:user_info' %}">个人资料</a></li>
+            <li class="{% ifequal current_page 'articles_read' %}active2{% endifequal %}"><a href="{% url 'users:articles_read' %}">曾阅读的文章</a></li>
+            <li class="{% ifequal current_page 'myfav' %}active2{% endifequal %}"><a href="{% url 'users:myfav_org' %}">我的收藏</a></li>
+            <li><a href="http://www.adore.xin/contribute/postpassage.php">我要投稿</a></li>
+            <li class="{% ifequal current_page 'mymessage' %}active2{% endifequal %}"><a href="{% url 'users:mymessage' %}" style="position: relative;">我的消息</a></li>
         </ul>
 	</div>
 
@@ -121,7 +121,7 @@
 				<form class="perinform" id="jsEditUserForm" autocomplete="off">
 					<ul class="right">
 						<li>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：
-                           <input type="text" name="nick_name" id="nick_name" value="django" maxlength="10">
+                           <input type="text" name="nick_name" id="nick_name" maxlength="10">
                             <i class="error-tips"></i>
                         </li>
 						<li>生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日：
@@ -140,7 +140,7 @@
                             <input type="text" name="mobile" id="mobile" placeholder="请输入你的手机号码" value="" maxlength="10">
                         </li>
                         <li>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：
-                        	<input class="borderno" type="text" name="email" readonly="readonly" value="projectsedu@sina.com"/>
+                        	<input class="borderno" type="text" name="email" readonly="readonly"/>
                             <span class="green changeemai_btn">[修改]</span>
                     	</li>
 						<li class="button heibtn">
@@ -158,14 +158,14 @@
 </section>
 
 <!--sidebar start-->
-<section>
-    <ul class="sidebar">
-        <li class="qq">
-            <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2023525077&site=qq&menu=yes"></a>
-        </li>
-        <li class="totop"></li>
-    </ul>
-</section>
+{#<section>#}
+{#    <ul class="sidebar">#}
+{#        <li class="qq">#}
+{#            <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2023525077&site=qq&menu=yes"></a>#}
+{#        </li>#}
+{#        <li class="totop"></li>#}
+{#    </ul>#}
+{#</section>#}
 <!--sidebar end-->
 <!--header start-->
 
@@ -286,7 +286,8 @@
                 </div>
                 <div class="box">
                     <span class="word3">验证码</span>
-                    <input autocomplete="off" class="form-control-captcha find-password-captcha" id="find-password-captcha_1" name="captcha_f_1" placeholder="请输入验证码" type="text" /> <input class="form-control-captcha find-password-captcha" id="find-password-captcha_0" name="captcha_f_0" placeholder="请输入验证码" type="hidden" value="5f3c00e47fb1be12d2fd15b9a860711597721b3f" /> &nbsp;<img src="/captcha/image/5f3c00e47fb1be12d2fd15b9a860711597721b3f/" alt="captcha" class="captcha" />
+                    <input autocomplete="off" class="form-control-captcha find-password-captcha" id="find-password-captcha_1" name="captcha_f_1" placeholder="请输入验证码" type="text" /> <input class="form-control-captcha find-password-captcha" id="find-password-captcha_0" name="captcha_f_0" placeholder="请输入验证码" type="hidden" value="5f3c00e47fb1be12d2fd15b9a860711597721b3f" /> &nbsp;
+                    <img src="/captcha/image/5f3c00e47fb1be12d2fd15b9a860711597721b3f/" alt="captcha" class="captcha" />
                 </div>
                 <div class="error btns" id="jsForgetTips"></div><!--忘记密码错误-->
                 <div class="button">

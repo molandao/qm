@@ -10,11 +10,11 @@
 		<div class="brief group_list">
             {% for article in all_articles %}
                 <div class="module1_5 box">
-                    <a class="comp-img-box" href="course-detail.html">
+                    <a class="comp-img-box" href="{% url 'articles:article_detail' article.id %}">
                         <img width="214" height="195" src="{{ MEDIA_URL }}{{ article.image }}"/>
                     </a>
                     <div class="des">
-                        <a href="course-detail.html"><h2>{{ article.name }}</h2></a>
+                        <a href="{% url 'articles:article_detail' article.id %}"><h2>{{ article.name }}</h2></a>
                         <span class="fl">阅读时间：<i class="key">{{ article.read_times }}</i></span>
                         <span class="fr">学习人数：{{ article.readers }}</span>
                     </div>
@@ -24,8 +24,6 @@
                     </div>
                 </div>
             {% endfor %}
-
-
 
 		</div>
 			<div class="pageturn">

@@ -28,10 +28,6 @@
                                 <span class="fl btn1 collectionbtn" id="jsLeftBtn">
                                      {% if has_author_faved %}已收藏{% else %}收藏{% endif %}
                                 </span>
-                                <span class="fr btn2 shareBtn bdsharebuttonbox">
-                                    <span class="fl">分享</span>
-                                    <a href="#" class="bds_more" data-cmd="more"></a>
-                                </span>
                             </div>
                         </dt>
                         <dd>
@@ -57,7 +53,6 @@
                     <div class="companycenter">
                         <div class="group_list brief">
                             {% for author_article in all_articles %}
-
                             <div class="module1_5 box">
                                 <a href="{% url 'articles:article_detail' author_article.id %}">
                                     <img width="214" height="190" class="scrollLoading" src="{{ MEDIA_URL }}{{ author_article.image }}"/>
@@ -72,16 +67,9 @@
                                     <span class="star fr  notlogin" data-favid="15">{{ author_article.fav_nums }}</span>
                                 </div>
                             </div>
-
                             {% endfor %}
-
                         </div>
                     </div>
-                <!--<div class="pageturn">-->
-                    <!--<ul class="pagelist">-->
-                        <!--<li class="active"><a href="?page=1">1</a></li>-->
-                    <!--</ul>-->
-                <!--</div>-->
             </div>
             </div>
         </div>
@@ -108,7 +96,6 @@
                         <div class="head">作者排行榜</div>
                         {% for hot_author in sorted_author %}
                         <dl class="des">
-                            <span class="num fl">1</span>
                             <a href="{% url 'authors_detail' hot_author.id %}">
                                 <dt>
                                     <img width="50" height="50" class="scrollLoading" src="{{ MEDIA_URL }}{{ hot_author.image }}"/>
@@ -118,6 +105,7 @@
                                 <a href="{% url 'authors_detail' hot_author.id %}">
                                     <h1 title="{{ hot_author.name }}">{{ hot_author.name }}</h1>
                                 </a>
+                                <p>写作风格：<span>{{ hot_author.writing_style }}</span></p>
                             </dd>
                         </dl>
                     {% endfor %}

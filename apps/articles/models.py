@@ -79,7 +79,6 @@ class MoreArticles(models.Model):
     article = models.ForeignKey(Article,verbose_name=u"文章",on_delete=models.CASCADE)
     name = models.CharField(max_length=100, verbose_name=u"名称")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
-    # download = models.FileField(upload_to="course/resource/%Y%m",verbose_name=u"资源文件",max_length=100)
 
     class Meta:
         verbose_name = u"更多文章"

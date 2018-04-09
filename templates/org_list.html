@@ -67,13 +67,12 @@
                                 <p class="c7">阅读人数：<span> {{ article_org.readers }}</span></p></li>
                         </ul>
                     </dd>
-                    <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>查看<br/>更多</div>
+                    <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><a href="{% url 'org_home' article_org.id %}"><br/>查看<br/>更多</a></div>
                 </dl>
             {% endfor %}
 
 		</div>
 		 <div class="pageturn">
-{#             {{ all_orgs.render }}#}
 
             <ul class="pagelist">
                 {% if all_orgs.has_previous %}
@@ -111,7 +110,7 @@
                     <input type="text" name="article_name" id="companyAddress" placeholder="文章名" maxlength="50" />
                 </div>
                 <p class="error company-tips" id="jsCompanyTips"></p>
-				<input class="btn" type="text" id="jsStayBtn" value="立即咨询 >" />
+				<input class="btn" type="text" id="jsStayBtn" value="立即提交 >" />
                 <input type='hidden' name='csrfmiddlewaretoken' value='5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy' />
                 {% csrf_token %}
             </form>

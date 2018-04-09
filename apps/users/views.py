@@ -198,7 +198,10 @@ class ModifyPwdView(View):
 class UserInfoView(LoginRequiredMixin, View):
     # 用户个人信息 需要登录
     def get(self,request):
-        return render(request, 'usercenter-info.html',{})
+        current_page = "info"
+        return render(request, 'usercenter-info.html',{
+            "current_page":current_page,
+        })
 
     def post(self, request):
         # ModelForm
@@ -281,8 +284,10 @@ class BrowsedArticlesView(LoginRequiredMixin, View):
     def get(self, request):
         user_browsedarticles = UserBrowsedArticles.objects.filter(user=request.user)
 
+        current_page = "articles_read"
         return render(request, 'usercenter-read.html',{
             "user_browsedarticles":user_browsedarticles,
+            "current_page":current_page,
         })
 
 
@@ -296,8 +301,11 @@ class MyFavOrgView(LoginRequiredMixin, View):
             org = ArticleOrg.objects.get(id=org_id)
             org_list.append(org)
 
+        current_page = "myfav"
         return render(request, 'usercenter-fav-org.html',{
             "org_list":org_list,
+
+            "current_page":current_page,
 
         })
 
@@ -312,8 +320,12 @@ class MyFavAuthorView(LoginRequiredMixin, View):
             author = Author.objects.get(id=author_id)
             author_list.append(author)
 
+        current_page = "myfav"
+
         return render(request, 'usercenter-fav-author.html',{
             "author_list":author_list,
+
+            "current_page": current_page,
 
         })
 
@@ -328,13 +340,19 @@ class MyFavArticleView(LoginRequiredMixin, View):
             article = Article.objects.get(id=article_id)
             article_list.append(article)
 
+        current_page = "myfav"
+
         return render(request, 'usercenter-fav-article.html',{
             "article_list":article_list,
+
+            "current_page": current_page,
+
         })
 
 
 class MyMessageView(LoginRequiredMixin,View):
     def get(self, request):
+
         all_messages = UserMessage.objects.filter(user=request.user.id)
 
         # 用户进入个人消息后清空未读消息
@@ -351,8 +369,10 @@ class MyMessageView(LoginRequiredMixin,View):
         p = Paginator(all_messages, 4, request=request)
         messages = p.page(page)
 
+        current_page = "mymessage"
         return render(request, 'usercenter-message.html', {
             "messages":messages,
+            "current_page":current_page,
         })
 
 

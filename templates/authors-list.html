@@ -85,13 +85,13 @@
             {% for hot_author in sorted_author %}
             <dl class="des">
                 <span></span>
-                <a href="/diary/hk_detail/6/">
+                <a href="{% url 'authors_detail' hot_author.id %}">
                     <dt>
                         <img width="50" height="50" class="scrollLoading"  src="{{ MEDIA_URL }}{{ hot_author.image }}"/>
                     </dt>
                 </a>
                 <dd>
-                    <a href="/diary/hk_detail/6/">
+                    <a href="{% url 'authors_detail' hot_author.id %}">
                         <h1 title="{{ hot_author.name }}">{{ hot_author.name }}</h1>
                     </a>
                     <p>写作风格：<span>{{ hot_author.writing_style }}</span></p>

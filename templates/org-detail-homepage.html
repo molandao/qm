@@ -7,15 +7,15 @@
 <div class="right companycenter layout grouping" >
     <div class="head">
         <h1>全部文章</h1>
-        <a class="green fr more" href="org-detail-course.html">查看更多  >  </a>
+        <a class="green fr more" href="{% url 'org_article' article_org.id %}">查看更多  >  </a>
     </div>
     <div class="brief group_list">
         {% for article in all_articles %}
             <div class="module1_5 box">
-                <a href="course-detail.html"><img width="214" src="{{ MEDIA_URL }}{{ article.image }}"/></a>
+                <a href="{% url 'articles:article_detail' article.id %}"><img width="214" src="{{ MEDIA_URL }}{{ article.image }}"/></a>
                 <div class="des">
-                    <a href="course-detail.html"><h2>{{ article.name }}</h2></a>
-                    <span class="fl">课时：<i class="key">{{ article.read_times }}</i></span>
+                    <a href="{% url 'articles:article_detail' article.id %}"><h2>{{ article.name }}</h2></a>
+                    <span class="fl">预计阅读时长：<i class="key">{{ article.read_times }}</i></span>
                     <span class="fr">参加人数：{{ article.readers }}</span>
                 </div>
                 <div class="bottom">
@@ -30,19 +30,19 @@
 <div class="right companycenter layout" >
     <div class="head">
         <h1>机构作者</h1>
-        <a class="green fr more" href="">查看更多  >  </a>
+        <a class="green fr more" href="{% url 'org_author' article_org.id %}">查看更多  >  </a>
     </div>
     {% for author in all_authors %}
         <div class="diarys">
             <div class="module5 share company-diary-box" style="padding:10px 0;">
                 <div class="left">
-                    <img class="pic" src="{{ MEDIA_URL }}{{ author.image }}"/>
+                    <a href="{% url 'authors_detail' author.id %}"><img class="pic" src="{{ MEDIA_URL }}{{ author.image }}"/></a>
                     <p>昵称：{{ author.name }}</p>
                 </div>
                 <div class="right">
                     <div class="top">
                         <div class="fl">
-                            <a href=""><h1>{{ author.name }}</h1></a>
+                            <a href="{% url 'authors_detail' author.id %}"><h1>{{ author.name }}</h1></a>
                             <span>注册于：{{ author.add_time }}</span>
                         </div>
                     </div>
