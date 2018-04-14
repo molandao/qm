@@ -3,6 +3,8 @@ from django import forms
 from captcha.fields import CaptchaField
 
 from .models import UserProfile
+from articles.models import Article
+from organization.models import Author
 
 
 class LoginForm(forms.Form):
@@ -35,9 +37,20 @@ class UploadImageForm(forms.ModelForm):
         model = UserProfile
         fields = ['image']
 
+class ArticleImageForm(forms.ModelForm):
+    class Meta:
+        model = Author
+        fields = ['image']
+
 
 class UserInfoForm(forms.ModelForm):
     class Meta:
         # ModelForm user定义了个字段叫做image
         model = UserProfile
         fields = ['nick_name','gender','birday','mobile']
+
+
+class UserPostPassage(forms.ModelForm):
+    class Meta:
+        model = Article
+        fields = ['name','desc','detail','art_len','read_times','category','tag','author','youneed_know','image']

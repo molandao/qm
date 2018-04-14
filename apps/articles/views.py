@@ -47,7 +47,7 @@ class ArticleListView(View):
             "all_articles":articles,
             "sort":sort,
             "hot_articles":hot_articles,
-
+            "search_keywords":search_keywords,
         })
 
 
@@ -60,7 +60,7 @@ class ArticleDetailView(View):
 
         tag = article.tag
         if tag:
-            relate_articles = Article.objects.filter(tag=tag)[:1]
+            relate_articles = Article.objects.filter(tag=tag)[1:2]
         else:
             relate_articles = []
 

@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
-	<title>{% block title %}青木首页{% endblock %}</title>
+	<title>{% block title %}青木首页 -- 文学爱好者聚集地{% endblock %}</title>
 
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
@@ -60,7 +60,7 @@
                     <a href="{% url 'index' %}"><img class="fl" src="{% static 'images/logo.jpg' %}"/></a>
                     <div class="searchbox fr">
                         <div class="selectContainer fl">
-                            <span class="selectOption" id="jsSelectOption" data-value="course">文章</span>
+                            <span class="selectOption" id="jsSelectOption" data-value="articles">文章</span>
                             <ul class="selectMenu" id="jsSelectMenu">
                                 <li data-value="artilces">文章</li>
                                 <li data-value="org">组织</li>

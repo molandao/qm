@@ -57,6 +57,7 @@ class OrgView(View):
             "category":category,
             "hot_orgs":hot_orgs,
             "sort":sort,
+            "search_keywords":search_keywords,
         })
 
 
@@ -252,6 +253,7 @@ class AuthorListView(View):
             "sorted_author":sorted_author,
             "sort":sort,
             "aut_nums":aut_nums,
+            "search_keywords":search_keywords,
         })
 
 

@@ -6380,6 +6380,18 @@ footer .footer .line {
     overflow: hidden;
     width: 943px;
     border-top: 0;
+    font-size: 14px;
+}
+.personal_des .inforcon .postpass{
+    float: left;
+    width: 800px;
+    height: 100%;
+    text-align: left;
+    vertical-align: top;
+    border: 0;
+    background: none;
+    font-size: 18px;
+    margin: 30px 100px 30px;
 }
 
 .personal_des .inforcon .left {

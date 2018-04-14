@@ -4,7 +4,7 @@ from django.contrib.auth.backends import ModelBackend
 from .models import UserProfile,EmailVerifyRecord
 from django.db.models import Q
 from django.views.generic.base import View
-from .forms import LoginForm, RegisterForm, ForgetForm,ModifyPwdrForm, UploadImageForm, UserInfoForm
+from .forms import LoginForm, RegisterForm, ForgetForm,ModifyPwdrForm, UploadImageForm, UserInfoForm, ArticleImageForm
 from django.contrib.auth.hashers import make_password
 
 from utils.email_send import send_register_email
@@ -19,7 +19,7 @@ from operation.models import UserBrowsedArticles, UsersFavorite,UserMessage
 
 from organization.models import ArticleOrg, Author
 
-from articles.models import Article
+from articles.models import Article, Content, Lesson
 
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
@@ -158,7 +158,9 @@ class ForgetPwdView(View):
             send_register_email(email, "forget")
             return render(request, "send_success.html")
         else:
-            return render(request, "forgetpwd.html", {"forget_form": forget_form})
+            return render(request, "forgetpwd.html", {
+                "forget_form": forget_form
+            })
 
 
 class ResetView(View):
@@ -400,15 +402,62 @@ class IndexView(View):
         })
 
 
-# def page_not_found(request):
-#     # 全局
-#     from django.shortcuts import render_to_response
-#     response = render_to_response('404.html',{})
-#     response.status_code = 404
-#     return response
-#
-# def page_error(request):
-#     from django.shortcuts import render_to_response
-#     response = render_to_response('500.html', {})
-#     response.status_code = 500
-#     return response
+class PostPassagesView(View):
+    def get(self,request):
+        current_page = "postpassage"
+        all_articles = Article.objects.all()
+        all_orgs = ArticleOrg.objects.all()
+        all_authors = Author.objects.all()
+        return render(request, 'usercenter_tg.html',{
+            "current_page":current_page,
+            "all_articles":all_articles,
+            "all_orgs":all_orgs,
+            "all_authors":all_authors,
+        })
+
+
+class AddPassagesView(View):
+    def post(self, request):
+        article_name = request.POST.get("article_name","")
+        desc = request.POST.get("desc","")
+        detail = request.POST.get("detail","")
+        # art_len = request.POST.get("art_len","")
+        read_times = request.POST.get("read_times","")
+        category = request.POST.get("category","")
+        tag = request.POST.get("tag","")
+        author = request.POST.get("author","")
+        youneed_know = request.POST.get("youneed_know","")
+        img = request.FILES.get('image')
+        content = request.POST.get("content","")
+        lesson = request.POST.get("lesson","")
+        article_org = request.POST.get("article_org",10)
+
+        if content :
+            post_article = Article()
+            post_article.desc = desc
+            post_article.detail = detail
+            # post_article.art_len = art_len
+            post_article.name = article_name
+            post_article.read_times = read_times
+            post_article.category = category
+            post_article.tag = tag
+            author = Author.objects.get(id=int(author))
+            post_article.author = author
+            post_article.youneed_know = youneed_know
+            article_org = ArticleOrg.objects.get(id=article_org)
+            post_article.article_org = article_org
+            # post_article.image = Author.objects.get(image=image)
+            # image_form = ArticleImageForm(request.POST, request.FILES, instance=request.user)
+            # if image_form.is_valid():
+            #     image = image_form.cleaned_data['image']
+            # image_form.save()
+            post_article.save()
+            post_content = Content()
+            post_content.name = article_name
+            post_content.art_content = content
+            lesson = Lesson.objects.get(id=int(lesson))
+            post_content.lesson = lesson
+            post_content.save()
+            return HttpResponse('{"status":"success","msg":"提交成功"}', content_type='application/json')
+        else:
+            return HttpResponse('{"status":"fail","msg":"提交失败"}',content_type='application/json')

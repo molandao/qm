@@ -112,7 +112,10 @@ $(function(){
     $('.js-img-up').uploadPreview({ Img: ".js-img-show", Width: 94, Height: 94 ,Callback:function(){
         $('#jsAvatarForm').submit();
     }});
-
+    //投稿封面图
+    $('.js-img-tg').uploadPreview({ Width: 94, Height: 94 ,Callback:function(){
+        $('#jsEditArticleForm').submit();
+    }});
 
     $('.changeemai_btn').click(function(){
         Dml.fun.showDialog('#jsChangeEmailDialog', '#jsChangePhoneTips' ,'jsChangeEmailTips');
@@ -192,5 +195,96 @@ $(function(){
         });
     });
 
+    //保存个人资料
+    $('#jsEditArticleBtn').on('click', function(){
+        var _self = $(this),
+            $jsEditArticleForm = $('#jsEditArticleForm')
+            verify = verifySubmit(
+            [
+                {id: '#nick_name', tips: Dml.Msg.epNickName, require: true}
+            ]
+        );
+        if(!verify){
+           return;
+        }
+        $.ajax({
+            cache: false,
+            type: 'post',
+            dataType:'json',
+            url:"/users/postpassages/",
+            data:$jsEditArticleForm.serialize(),
+            async: true,
+            beforeSend:function(XMLHttpRequest){
+                _self.val("保存中...");
+                _self.attr('disabled',true);
+            },
+            success: function(data) {
+                if(data.nick_name){
+                    _showValidateError($('#nick_name'), data.nick_name);
+                }else if(data.birday){
+                   _showValidateError($('#birth_day'), data.birday);
+                }else if(data.status == "failure"){
+                     Dml.fun.showTipsDialog({
+                        title: '保存失败',
+                        h2: data.msg
+                    });
+                }else if(data.status == "success"){
+                    Dml.fun.showTipsDialog({
+                        title: '保存成功',
+                        h2: '个人信息修改成功！'
+                    });
+                    setTimeout(function(){window.location.href = window.location.href;},1500);
+                }
+            },
+            complete: function(XMLHttpRequest){
+                _self.val("保存");
+                _self.removeAttr("disabled");
+            }
+        });
+    });
+    // $('#jsUserPostBtn').on('click', function(){
+    //     var _self = $(this),
+    //         $jsEditUserForm = $('#jsEditUserForm');
+    //         verify = verifySubmit(
+    //         [
+    //             {id: '#nick_name', tips: Dml.Msg.epNickName, require: true}
+    //         ]
+    //     );
+    //     if(!verify){
+    //        return;
+    //     }
+    //     $.ajax({
+    //         cache: false,
+    //         type: 'post',
+    //         dataType:'json',
+    //         url:"/users/postpassages/",
+    //         data:$jsEditUserForm.serialize(),
+    //         async: true,
+    //         beforeSend:function(XMLHttpRequest){
+    //             _self.val("保存中...");
+    //             _self.attr('disabled',true);
+    //         },
+    //         success: function(data) {
+    //             if(data.name){
+    //                 _showValidateError($('#name'), data.name);
+    //             }else if(data.status == "failure"){
+    //                  Dml.fun.showTipsDialog({
+    //                     title: '提交失败',
+    //                     h2: data.msg
+    //                 });
+    //             }else if(data.status == "success"){
+    //                 Dml.fun.showTipsDialog({
+    //                     title: '提交成功',
+    //                     h2: '提交稿件成功！'
+    //                 });
+    //                 setTimeout(function(){window.location.href = window.location.href;},1500);
+    //             }
+    //         },
+    //         complete: function(XMLHttpRequest){
+    //             _self.val("保存");
+    //             _self.removeAttr("disabled");
+    //         }
+    //     });
+    // });
 
 });

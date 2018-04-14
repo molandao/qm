@@ -84,7 +84,8 @@
             <div class="head">作者排行榜</div>
             {% for hot_author in sorted_author %}
             <dl class="des">
-                <span></span>
+{#                <span></span>#}
+{#                <dt class="num fl">{{ forloop.counter }}</dt>#}
                 <a href="{% url 'authors_detail' hot_author.id %}">
                     <dt>
                         <img width="50" height="50" class="scrollLoading"  src="{{ MEDIA_URL }}{{ hot_author.image }}"/>

@@ -31,7 +31,6 @@
                             <a href="?ct=gx"><span class="{% ifequal category 'gx' %}active2{% endifequal %}">高校</span></a>
 
                             <a href="?ct=gr"><span class="{% ifequal category 'gr' %}active2{% endifequal %}">个人</span></a>
-
 					</div>
 				</li>
 			</ul>
@@ -103,11 +102,11 @@
 			<form class="rightform" id="jsStayForm">
 				<div>
                     <img src="{% static 'images/rightform1.png' %}"/>
-                    <input type="text" name="name" id="companyName" placeholder="名字" maxlength="25" />
+                    <input type="text" name="name" id="companyName" placeholder="用户名" maxlength="25" />
                 </div>
 				<div>
                     <img src="{% static 'images/rightform3.png' %}"/>
-                    <input type="text" name="article_name" id="companyAddress" placeholder="文章名" maxlength="50" />
+                    <input type="text" name="article_name" id="companyAddress" placeholder="文章名关键词" maxlength="50" />
                 </div>
                 <p class="error company-tips" id="jsCompanyTips"></p>
 				<input class="btn" type="text" id="jsStayBtn" value="立即提交 >" />

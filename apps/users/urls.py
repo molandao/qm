@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import UserInfoView, UploadImvageView, UpdatePwdView, SendEmailCodeView, UpdateEmailView, BrowsedArticlesView
-from .views import MyFavOrgView, MyFavAuthorView, MyFavArticleView, MyMessageView
+from .views import MyFavOrgView, MyFavAuthorView, MyFavArticleView, MyMessageView,PostPassagesView, AddPassagesView
 
 app_name = '[users]'
 urlpatterns = [
@@ -34,4 +34,10 @@ urlpatterns = [
 
     # 我的消息
     path('mymessage/', MyMessageView.as_view(), name='mymessage'),
+
+    # 投稿
+    path('postpassages/',PostPassagesView.as_view(),name='postpassage'),
+
+    # 投稿
+    path('postpassages/post',AddPassagesView.as_view(),name='postpassage_post')
 ]

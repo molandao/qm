@@ -24,7 +24,6 @@
                 </div>
             </div>
         {% endfor %}
-
     </div>
 </div>
 <div class="right companycenter layout" >
@@ -59,9 +58,9 @@
 <div class="right companycenter layout" >
     <div class="head">
         <h1>机构介绍</h1>
-        <a class="green fr more" href="org-detail-desc.html">查看更多  >  </a>
+        <a class="green fr more" href="{% url 'org_desc' article_org.id %}">查看更多  >  </a>
     </div>
-    <div class="cont">{{ article_org.desc }}<a href="/company/desc/22/"><span class="green">[查看更多]</span></a></div>
+    <div class="cont">{{ article_org.desc }}<a href="{% url 'org_desc' article_org.id %}"><span class="green">[查看更多]</span></a></div>
 </div>
 {% endblock %}
 
