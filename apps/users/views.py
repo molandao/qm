@@ -11,7 +11,7 @@ from utils.email_send import send_register_email
 
 from utils.mixin_utils import LoginRequiredMixin
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 
 import json
 
@@ -217,7 +217,6 @@ class UserInfoView(LoginRequiredMixin, View):
             return HttpResponse(json.dumps(user_info_form.errors), content_type='application/json')
 
 
-
 class UploadImvageView(LoginRequiredMixin,View):
     # 用户头像修改
     def post(self, request):
@@ -421,22 +420,23 @@ class AddPassagesView(View):
         article_name = request.POST.get("article_name","")
         desc = request.POST.get("desc","")
         detail = request.POST.get("detail","")
-        # art_len = request.POST.get("art_len","")
+        art_len = request.POST.get("art_len","dp")
         read_times = request.POST.get("read_times","")
         category = request.POST.get("category","")
         tag = request.POST.get("tag","")
         author = request.POST.get("author","")
         youneed_know = request.POST.get("youneed_know","")
-        img = request.FILES.get('image')
         content = request.POST.get("content","")
         lesson = request.POST.get("lesson","")
         article_org = request.POST.get("article_org",10)
+        # image_form = ArticleImageForm(request.POST or None, request.FILES or None)
+        image = request.POST.get("image","/articles/201804/IMG_1084.JPG")
 
         if content :
             post_article = Article()
             post_article.desc = desc
             post_article.detail = detail
-            # post_article.art_len = art_len
+            post_article.art_len = art_len
             post_article.name = article_name
             post_article.read_times = read_times
             post_article.category = category
@@ -446,11 +446,8 @@ class AddPassagesView(View):
             post_article.youneed_know = youneed_know
             article_org = ArticleOrg.objects.get(id=article_org)
             post_article.article_org = article_org
-            # post_article.image = Author.objects.get(image=image)
-            # image_form = ArticleImageForm(request.POST, request.FILES, instance=request.user)
-            # if image_form.is_valid():
-            #     image = image_form.cleaned_data['image']
-            # image_form.save()
+            post_article.image = image
+
             post_article.save()
             post_content = Content()
             post_content.name = article_name

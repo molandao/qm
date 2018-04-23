@@ -21,7 +21,7 @@
 		<div  class=" header">
  			<div class="top">
 				<div class="wp">
-					<div class="fl"><p>联系方式：<b>869827921@qq.com</b></p></div>
+					<div class="fl"><p>联系方式：<b>859084143@qq.com</b></p></div>
 					<!--登录后跳转-->
 						{% if request.user.is_authenticated %}
                             <div class="personal">
@@ -39,7 +39,7 @@
                                     </dl>
                                     <div class="btn">
                                         <a class="personcenter fl" href="{% url 'users:user_info' %}">进入个人中心</a>
-                                        <a class="personcenter fl" href="http://www.adore.xin/contribute/postpassage.php">投稿</a>
+                                        <a class="personcenter fl" href="{% url 'users:postpassage' %}">投稿</a>
 
                                         <a class="fr" href="{% url 'logout' %}">退出</a>
                                     </div>
@@ -115,7 +115,7 @@
 				<ul class="cont">
 					<li class="logo"><a href=""><img src="{% static 'images/footlogo.png' %}"/></a></li>
 					<li class="code"><img src="{% static 'images/code.jpg' %}"/><p class="center">扫描关注微信</p></li>
-					<li class="third"><img class="fl" src="{% static 'images/tell.png' %}"/><p class="tell">022-10000001</p><p class="time">周一至周日 24h全天候在线</p></li>
+					<li class="third"><img class="fl" src="{% static 'images/tell.png' %}"/><p class="tell">022-15253983719</p><p class="time">周一至周日 24h全天候在线</p></li>
 				</ul>
 			</div>
 			<p class="line"></p>

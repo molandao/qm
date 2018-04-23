@@ -52,6 +52,11 @@
 							<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  name="gender" value="male" {% if request.user.gender == 'male' %} checked="checked"{% endif %}>男</label>
 							<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female" {% if request.user.gender == 'female' %} checked="checked"{% endif %}>女</label>
 						</li>
+                        <li>所属组织：
+							<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  name="category" value="zzjg" {% if request.user.gender == 'zzjg' %} checked="checked"{% endif %}>组织机构</label>
+							<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="category" value="gx" {% if request.user.gender == 'gx' %} checked="checked"{% endif %}>高校</label>
+                            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  name="category" value="gr" {% if request.user.gender == 'gr' %} checked="checked"{% endif %}>个人</label>
+						</li>
 						<li>手&nbsp;&nbsp;机&nbsp;&nbsp;号：
                             <input type="text" name="mobile" id="mobile" placeholder="请输入你的手机号码" value="{{ request.user.mobile|default_if_none:'' }}" maxlength="10">
                         </li>

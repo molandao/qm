@@ -19,7 +19,8 @@
 				<h1>投稿</h1>
 			</div>
 			<div class="inforcon">
-				<form class="perinform" enctype="multipart/form-data" method="post" id="jsEditArticleForm" autocomplete="off" action="{% url 'users:postpassage_post' %}">
+				<form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
 					<ul class="postpass">
 						<li>用户名称：
                            <input class="borderno" type="text" name="nick_name" id="nick_name" readonly="readonly" value="{{ request.user.nick_name }}" maxlength="10">
@@ -32,7 +33,7 @@
                             <input type="text" name="article_name" id="article_name" placeholder="请输入文章名称" value="" maxlength="20">
                         </li><br/>
                         <li>文章封面：
-                            <input type="file" name="image" />
+                            <input type="file" name="image">
                         </li><br/>
                         <li>文章简介：
                             <input type="text" name="desc" id="desc" placeholder="请输入文章简介" value="" maxlength="100">
@@ -41,9 +42,9 @@
                             <input type="text" name="detail" id="detail" placeholder="请输入文章详情" value="" maxlength="100">
                         </li><br/>
                         <li>文章长度：
-							<label><input type="radio"  name="gender" value="male" {% if request.user.gender == 'male' %} checked="checked"{% endif %}>短篇</label>
-							<label><input type="radio" name="gender" value="female" {% if request.user.gender == 'female' %} checked="checked"{% endif %}>中篇</label>
-                            <label><input type="radio" name="gender" value="female" {% if request.user.gender == 'female' %} checked="checked"{% endif %}>长篇</label>
+							<label><input type="radio"  name="art_len" value="dp" {% if request.user.gender == 'dp' %} checked="checked"{% endif %}>短篇</label>
+							<label><input type="radio" name="art_len" value="zp" {% if request.user.gender == 'zp' %} checked="checked"{% endif %}>中篇</label>
+                            <label><input type="radio" name="art_len" value="cp" {% if request.user.gender == 'cp' %} checked="checked"{% endif %}>长篇</label>
 						</li><br/>
                         <li>预计时长：
                             <input type="text" name="read_times" id="read_times" placeholder="请输入预计阅读时长（分钟）" value="" maxlength="10">
@@ -68,14 +69,13 @@
                         </li></label><br/>
                         <li>文章内容：
                             <textarea type="text" name="content" id="content" style="height: 500px;width: 600px;vertical-align: top" placeholder="输入文章内容"></textarea>
-{#                            <input type="text" name="content" id="content" placeholder="请输入文章内容" value="" maxlength="" style="height: 800px;width: 600px">#}
                         </li><br/>
                         <li>
 							<input type="button" id="jsUserPostBtn" value="提交">
 						</li>
 					</ul>
                     <input type='hidden' name='csrfmiddlewaretoken' value='799Y6iPeEDNSGvrTu3noBrO4MBLv6enY' />
-                {% csrf_token %}
+
 				</form>
 			</div>
 		</div>

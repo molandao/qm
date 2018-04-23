@@ -10,9 +10,7 @@ class ArticleOrg(models.Model):
     click_nums = models.IntegerField(default=0,verbose_name=u"点击数")
     fav_nums = models.IntegerField(default=0,verbose_name=u"收藏数")
     image = models.ImageField(upload_to="org/%Y/%m",verbose_name=u"logo",max_length=100)
-    #address = models.CharField(max_length=150, verbose_name=u"组织地址")
-    #city = models.ForeignKey(CityDict,verbose_name="所在城市")
-    category = models.CharField(max_length=20, choices=(("zzjg","组织机构"),("gx","高校"),("gr","个人")), verbose_name=u"组织类别",default="zzjg")
+    category = models.CharField(max_length=20, choices=(("zzjg","组织机构"),("gx","高校"),("gr","个人")), verbose_name=u"组织类别",default="gr")
     readers = models.IntegerField(default=0, verbose_name=u"阅读人数")
     article_nums = models.IntegerField(default=0, verbose_name=u"文章数")
 

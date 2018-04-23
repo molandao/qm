@@ -13,7 +13,7 @@ class UserProfile(AbstractUser):
     gender = models.CharField(choices=(("male",u"男"),("female",u"女")),default="female",max_length=7)# 性别
     address = models.CharField(max_length=100, default=u"")# 地址
     mobile = models.CharField(max_length=11, null=True, blank=True)# 手机号，注册
-    image = models.ImageField(upload_to="image/%Y/%m", default=u"image/default.png", max_length=100) # 头像
+    image = models.ImageField(upload_to="image/%Y/%m", default=u"static/images/default.png", max_length=100) # 头像
 
     class Meta:
         verbose_name = "用户信息"

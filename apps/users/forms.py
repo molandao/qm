@@ -37,9 +37,10 @@ class UploadImageForm(forms.ModelForm):
         model = UserProfile
         fields = ['image']
 
+
 class ArticleImageForm(forms.ModelForm):
     class Meta:
-        model = Author
+        model = Article
         fields = ['image']
 
 

@@ -21,12 +21,12 @@
         <div  class="header2 header">
             <div class="top">
                 <div class="wp">
-                    <div class="fl"><p>联系方式：<b>869827921@qq.com</b></p></div>
+                    <div class="fl"><p>联系方式：<b>859084143@qq.com</b></p></div>
 					<!--登录后跳转-->
                     {% if request.user.is_authenticated %}
                             <div class="personal">
                                 <dl class="user fr">
-                                    <dd>{{ user.username }}<img class="down fr" src="/static/images/top_down.png"/></dd>
+                                    <dd>{{ user.nick_name }}<img class="down fr" src="/static/images/top_down.png"/></dd>
                                     <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
                                 </dl>
                                 <div class="userdetail">
@@ -39,7 +39,7 @@
                                     </dl>
                                     <div class="btn">
                                         <a class="personcenter fl" href="{% url 'users:user_info' %}">进入个人中心</a>
-                                        <a class="personcenter fl" href="http://www.adore.xin/contribute/postpassage.php">投稿</a>
+                                        <a class="personcenter fl" href="{% url 'users:postpassage' %}">投稿</a>
 
                                         <a class="fr" href="{% url 'logout' %}">退出</a>
                                     </div>
